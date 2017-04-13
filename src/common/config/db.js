@@ -10,7 +10,7 @@ export default {
       host: '127.0.0.1',
       port: '',
       database: 'ecp',
-      user: 'localhost',
+      user: 'root',
       password: '',
       prefix: 'ecp_',
       encoding: 'utf8'
