@@ -10,6 +10,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
+    <link href="/static/assets/plugins/toastr/toastr.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/AmazeUI-2.4.2/assets/css/amazeui.min.css" />
     <link href="/static/shop/css/dlstyle.css" rel="stylesheet" type="text/css">
     <script src="/static/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
@@ -108,10 +109,10 @@
                         var passwordRepeat = document.getElementById('passwordRepeat').value;
                         console.log(name , password, passwordRepeat);
                         if(name == ""||password == ""|| passwordRepeat == ""){
-                          alert('not null!');
+                            _toastr("用户名、密码不能为空！","top-right","error",false);
                         }
                         if(password != passwordRepeat) {
-                          alert('password not the same !')
+	                        _toastr("两次输入的密码不同！","top-right","error",false);
                         }
                         var data = $('.register').serialize();
                         $.ajax({
