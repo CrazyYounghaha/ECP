@@ -29,14 +29,19 @@ export default class extends Base {
 						user_id: user.user_id,
 						login_time: dateformat('Y-m-d H:i:s', data.login_time)
 					});
-					yield this.model('user').where({name: data.name}).update({is_online: 1})
+					yield this.model('user').where({name: data.name}).update({is_online: 1});
+					let shoppingCart = yield this.model('shoppingcart').where({user_id: user.user_id}).find();
+					if( think.isEmpty(shoppingCart)){
+						shoppingCart.total = 0;
+					}
 					let userInfo = {
 						'id': user.user_id,
 						'username': data.name,
 						// 'mem_type': data.memberType,
 						'is_online': 1,
 						'is_vip': 0,
-						'login_time': data.login_time
+						'login_time': data.login_time,
+						'cart_total': shoppingCart.total
 					};
 					yield this.session('loginuser', userInfo);
 					return this.success(1);
@@ -70,6 +75,14 @@ export default class extends Base {
 			return this.success(1);
 		} else {
 			return this.display();
+		}
+	}
+
+	* logoutAction() {
+		if(this.islogin){
+			yield this.model("user").where({name: this.user.username}).update({is_online: 0});
+			yield this.session("loginuser",null);
+			return this.redirect('login');
 		}
 	}
 }

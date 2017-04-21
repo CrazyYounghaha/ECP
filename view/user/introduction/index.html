@@ -48,76 +48,44 @@
         <li><a href="#">分类</a></li>
         <li class="am-active">内容</li>
     </ol>
-    <script type="text/javascript">
-			$(function () {
-			});
-			$(window).load(function () {
-				$('.flexslider').flexslider({
-					animation: "slide",
-					start: function (slider) {
-						$('body').removeClass('loading');
-					}
-				});
-			});
-    </script>
-    <div class="scoll">
-        <section class="slider">
-            <div class="flexslider">
-                <ul class="slides">
-                    <li>
-                        <img src="/static/shop/images/01.jpg" title="pic"/>
-                    </li>
-                    <li>
-                        <img src="/static/shop/images/02.jpg"/>
-                    </li>
-                    <li>
-                        <img src="/static/shop/images/03.jpg"/>
-                    </li>
-                </ul>
-            </div>
-        </section>
-    </div>
-
-
     <div class="item-inform">
         <div class="clearfixLeft" id="clearcontent">
 
             <!--放大镜-->
             <div class="box">
                 <script type="text/javascript">
-									$(document).ready(function () {
-										$(".jqzoom").imagezoom();
-										$("#thumblist li a").click(function () {
-											$(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
-											$(".jqzoom").attr('src', $(this).find("img").attr("mid"));
-											$(".jqzoom").attr('rel', $(this).find("img").attr("big"));
-										});
-									});
+                  $(document).ready(function () {
+					$(".jqzoom").imagezoom();
+                    $("#thumblist li a").click(function () {
+                      $(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
+                      $(".jqzoom").attr('src', $(this).find("img").attr("mid"));
+                      $(".jqzoom").attr('rel', $(this).find("img").attr("big"));
+                    });
+                  });
                 </script>
 
                 <div class="tb-booth tb-pic tb-s310">
-                    <a href="/static/shop/images/01.jpg"><img src="/static/shop/images/01_mid.jpg" alt="细节展示放大镜特效"
-                                                              rel="/static/shop/images/01.jpg" class="jqzoom"/></a>
+                    <a href="<%- pictures[0].big_path -%>"><img src="<%- pictures[0].mid_path -%>" alt="细节展示放大镜特效"
+                                                              rel="<%- pictures[0].big_path -%>" class="jqzoom"/></a>
                 </div>
                 <ul class="tb-thumb" id="thumblist">
+                    <% for (var index in pictures) { %>
+                    <% if (index == 0) { %>
                     <li class="tb-selected">
                         <div class="tb-pic tb-s40">
-                            <a href="#"><img src="/static/shop/images/01_small.jpg" mid="/static/shop/images/01_mid.jpg"
-                                             big="/static/shop/images/01.jpg"></a>
+                            <a href="#"><img src="<%- pictures[index].small_path -%>" mid="<%- pictures[index].mid_path -%>"
+                                             big="<%- pictures[index].big_path -%>"></a>
                         </div>
                     </li>
+                    <% } else { %>
                     <li>
                         <div class="tb-pic tb-s40">
-                            <a href="#"><img src="/static/shop/images/02_small.jpg" mid="/static/shop/images/02_mid.jpg"
-                                             big="/static/shop/images/02.jpg"></a>
+                            <a href="#"><img src="<%- pictures[index].small_path -%>" mid="<%- pictures[index].mid_path -%>"
+                                             big="<%- pictures[index].big_path -%>"></a>
                         </div>
                     </li>
-                    <li>
-                        <div class="tb-pic tb-s40">
-                            <a href="#"><img src="/static/shop/images/03_small.jpg" mid="/static/shop/images/03_mid.jpg"
-                                             big="/static/shop/images/03.jpg"></a>
-                        </div>
-                    </li>
+                    <% } %>
+                    <% } %>
                 </ul>
             </div>
 
@@ -130,7 +98,7 @@
             <!--名称-->
             <div class="tb-detail-hd">
                 <h1>
-                    良品铺子 手剥松子218g 坚果炒货 巴西松子
+                    <%- product_details.name -%>
                 </h1>
             </div>
             <div class="tb-detail-list">
@@ -138,11 +106,11 @@
                 <div class="tb-detail-price">
                     <li class="price iteminfo_price">
                         <dt>促销价</dt>
-                        <dd><em>¥</em><b class="sys_item_price">56.90</b></dd>
+                        <dd><em>¥</em><b class="sys_item_price"><%- product_details.price -%></b></dd>
                     </li>
                     <li class="price iteminfo_mktprice">
                         <dt>原价</dt>
-                        <dd><em>¥</em><b class="sys_item_mktprice">98.00</b></dd>
+                        <dd><em>¥</em><b class="sys_item_mktprice">9999.00</b></dd>
                     </li>
                     <div class="clear"></div>
                 </div>
@@ -175,14 +143,14 @@
                 <!--销量-->
                 <ul class="tm-ind-panel">
                     <li class="tm-ind-item tm-ind-sellCount canClick">
-                        <div class="tm-indcon"><span class="tm-label">月销量</span><span class="tm-count">1015</span></div>
+                        <div class="tm-indcon"><span class="tm-label">月销量</span><span class="tm-count">10</span></div>
                     </li>
                     <li class="tm-ind-item tm-ind-sumCount canClick">
-                        <div class="tm-indcon"><span class="tm-label">累计销量</span><span class="tm-count">6015</span>
+                        <div class="tm-indcon"><span class="tm-label">累计销量</span><span class="tm-count"><%- product_details.cumulative_sales -%></span>
                         </div>
                     </li>
                     <li class="tm-ind-item tm-ind-reviewCount canClick tm-line3">
-                        <div class="tm-indcon"><span class="tm-label">累计评价</span><span class="tm-count">640</span></div>
+                        <div class="tm-indcon"><span class="tm-label">累计评价</span><span class="tm-count"><%- commentNumber -%></span></div>
                     </li>
                 </ul>
                 <div class="clear"></div>
@@ -207,30 +175,30 @@
 
                                     <div class="theme-signin-left">
 
-                                        <div class="theme-options">
-                                            <div class="cart-title">口味</div>
-                                            <ul>
-                                                <li class="sku-line selected">原味<i></i></li>
-                                                <li class="sku-line">奶油<i></i></li>
-                                                <li class="sku-line">炭烧<i></i></li>
-                                                <li class="sku-line">咸香<i></i></li>
-                                            </ul>
-                                        </div>
-                                        <div class="theme-options">
-                                            <div class="cart-title">包装</div>
-                                            <ul>
-                                                <li class="sku-line selected">手袋单人份<i></i></li>
-                                                <li class="sku-line">礼盒双人份<i></i></li>
-                                                <li class="sku-line">全家福礼包<i></i></li>
-                                            </ul>
-                                        </div>
+                                        <!--<div class="theme-options">-->
+                                            <!--<div class="cart-title">口味</div>-->
+                                            <!--<ul>-->
+                                                <!--<li class="sku-line selected">原味<i></i></li>-->
+                                                <!--<li class="sku-line">奶油<i></i></li>-->
+                                                <!--<li class="sku-line">炭烧<i></i></li>-->
+                                                <!--<li class="sku-line">咸香<i></i></li>-->
+                                            <!--</ul>-->
+                                        <!--</div>-->
+                                        <!--<div class="theme-options">-->
+                                            <!--<div class="cart-title">包装</div>-->
+                                            <!--<ul>-->
+                                                <!--<li class="sku-line selected">手袋单人份<i></i></li>-->
+                                                <!--<li class="sku-line">礼盒双人份<i></i></li>-->
+                                                <!--<li class="sku-line">全家福礼包<i></i></li>-->
+                                            <!--</ul>-->
+                                        <!--</div>-->
                                         <div class="theme-options">
                                             <div class="cart-title number">数量</div>
                     <dd>
                         <input id="min" class="am-btn am-btn-default" name="" type="button" value="-"/>
-                        <input id="text_box" name="" type="text" value="1" style="width:30px;"/>
+                        <input id="text_box" name="chooseNumber" type="text" value="1" style="width:30px;"/>
                         <input id="add" class="am-btn am-btn-default" name="" type="button" value="+"/>
-                        <span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
+                        <span id="Stock" class="tb-hidden">库存<span class="stock"><%- product_details.count -%></span>件</span>
                     </dd>
 
             </div>
@@ -247,7 +215,7 @@
             </div>
             <div class="text-info">
                 <span class="J_Price price-now">¥39.00</span>
-                <span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
+                <span id="Stock" class="tb-hidden">库存<span class="stock"><%- product_details.count -%></span>件</span>
             </div>
         </div>
 
@@ -286,14 +254,14 @@
         <a><span class="am-icon-heart am-icon-fw">收藏</span></a>
 
     </div>
-    <li>
-        <div class="clearfix tb-btn tb-btn-buy theme-login">
-            <a id="LikBuy" title="点此按钮到下一步确认购买信息" href="/cart/index">立即购买</a>
-        </div>
-    </li>
+    <!--<li>-->
+        <!--<div class="clearfix tb-btn tb-btn-buy theme-login">-->
+            <!--<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="/cart/index">立即购买</a>-->
+        <!--</div>-->
+    <!--</li>-->
     <li>
         <div class="clearfix tb-btn tb-btn-basket theme-login">
-            <a id="LikBasket" title="加入购物车" href="#"><i></i>加入购物车</a>
+            <a id="addBasket" title="加入购物车" ><i></i>加入购物车</a>
         </div>
     </li>
 </div>
@@ -413,6 +381,9 @@
 
 </div>
 </div>
+<script>
+
+</script>
 <!--菜单 -->
 <% include ../static/rightMenu.html %>
 </body>

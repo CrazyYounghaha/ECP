@@ -10,30 +10,27 @@
                 <!--个人信息 -->
 
                 <div class="m-userinfo">
-                    <a href="news.html">
+                    <a href="#">
                         <div class="tipsBox"><i class="am-icon-envelope"></i></div>
                     </a>
+                    <% if (controller.islogin) { %>
                     <div class="m-baseinfo">
                         <a class="m-pic" href="information.html">
                             <img src="/static/shop/images/getAvatar.do.jpg">
                         </a>
                         <div class="m-info">
-                            <em class="s-name">小叮当</em>
+                            <em class="s-name">用户名：<%- controller.user.username -%></em>
                             <div class="vip1"><a href="#"><span></span><em>会员专享</em></a></div>
-                            <div class="safeText"><a href="safety.html">账户安全:<em
-                                    style="margin-left:20px ;">60</em>分</a>
-                                <div class="progressBar"><span style="left: -95px;" class="progress"></span>
+                            <div class="safeText">
+                                <div class="progressBar"><span style="left: -1000px;" class="progress"></span>
                                 </div>
-                            </div>
-                            <div class="m-address">
-                                <a href="address.html" class="i-trigger">收货地址<i class="am-icon-angle-right"
-                                                                                style="padding-left:5px ;"></i></a>
                             </div>
                         </div>
                     </div>
+                    <% } %>
                     <div class="m-right">
                         <div class="m-new">
-                            <a href="news.html"><i class="am-icon-dropbox  am-icon-md"
+                            <a href=""><i class="am-icon-dropbox  am-icon-md"
                                                    style="padding-right:5px ;"></i>消息盒子</a>
                         </div>
 
@@ -46,19 +43,19 @@
                         <i class="s-icon"></i>个人资产
                     </div>
                     <p class="m-coupon">
-                        <a href="coupon.html">
+                        <a href="#">
                             <em class="m-num">2</em>
                             <span class="m-title">优惠券</span>
                         </a>
                     </p>
                     <p class="m-wallet">
-                        <a href="wallet.html">
+                        <a href="#">
                             <em class="m-num">0.00</em>
                             <span class="m-title">账户余额</span>
                         </a>
                     </p>
                     <p class="m-bill">
-                        <a href="pointnew.html">
+                        <a href="#">
                             <em class="m-num">10</em>
                             <span class="m-title">总积分</span>
                         </a>
