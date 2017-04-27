@@ -191,21 +191,26 @@ function getQueryStringArgs() {
 }
 
 $('#addBasket').click(function(){
-	var productNumber = document.getElementById('text_box').value;
-	var args = getQueryStringArgs();
-	// console.log(args.productId);
-	$.ajax({
-		url: "/user/cart/index",
-		type: "post",
-		data: {productId: args.productId, number: productNumber},
-		success: function(msg){
-			console.log(msg);
-			switch(msg.data){
-				case 1:
-					_toastr("添加购物车成功！","top-right","success",false);
-					window.open("/cart/index", "_blank");
-					break;
+	var loginMessage = document.getElementById('login');
+	if(loginMessage == null){
+		_toastr("您还没登录老铁！","top-right","error",false);
+	}else{
+		var productNumber = document.getElementById('text_box').value;
+		var args = getQueryStringArgs();
+		// console.log(args.productId);
+		$.ajax({
+			url: "/user/cart/index",
+			type: "post",
+			data: {productId: args.productId, number: productNumber},
+			success: function(msg){
+				// console.log(msg);
+				switch(msg.data){
+					case 1:
+						_toastr("添加购物车成功！","top-right","success",false);
+						window.open("/cart/index", "_blank");
+						break;
+				}
 			}
-		}
-	})
+		})
+	}
 });

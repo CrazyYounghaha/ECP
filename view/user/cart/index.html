@@ -71,7 +71,9 @@
                     <ul class="item-content clearfix">
                         <li class="td td-chk">
                             <div class="cart-checkbox ">
-                                <input class="check" id="" name="items[]" value="" type="checkbox">
+                                <input class="check" id="" name="" value="" type="checkbox">
+                                <input class="product_id" name="" value="<%- cart[index].product_id -%>"
+                                       style="display: none;" type="text">
                                 <label for=""></label>
                             </div>
                         </li>
@@ -119,7 +121,7 @@
                                         <input class="add am-btn" name="" type="button" value="+"/>
                                     </div>
                                     <span class="tb-hidden">库存<span
-                                            class="stock"><%- cart[index].count -%></span>件</span>
+                                            class="stock"><%- cart[index].inventory -%></span>件</span>
                                 </div>
                             </div>
                         </li>
@@ -170,7 +172,7 @@
                 <strong class="price">¥<em id="J_Total">0.00</em></strong>
             </div>
             <div class="btn-area">
-                <a href="javascript:;" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
+                <a href="#" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
                     <span>结&nbsp;算</span></a>
             </div>
         </div>
@@ -246,13 +248,36 @@
     <li><a href=""><i class="am-icon-user"></i>我的</a></li>
 </div>
 <script>
-    $("#J_Go").click(function(){
-    	if($("input[class='check']:checked").length == 0){
-           _toastr("您不选一项么？","top-right","error",false);
-        } else {//ajax跳转后台
-
-        }
-    });
+	$("#J_Go").click(function () {
+		if ($("ul input[class='check']:checked").length == 0) {
+			_toastr("您不选一项么？", "top-right", "error", false);
+		} else {//ajax跳转后台
+			var data = {};
+			$("ul[class='item-content clearfix']").map(function () {
+				var sth = $(this)[0].children;
+				if (sth[0].firstElementChild.firstElementChild.checked) {
+					var product_id = sth[0].firstElementChild.getElementsByClassName('product_id')[0].value;
+					var number = sth[4].firstElementChild.getElementsByClassName('text_box')[0].value;
+					data[product_id] = number;
+				}
+			});
+			data.total = document.getElementById("J_Total").innerHTML;
+			console.log(data);
+			$.ajax({
+				url: "/user/cart/pay",
+				type: "post",
+				data: data,
+				success: function (msg) {
+//					console.log(msg);
+					switch (msg.data) {
+						case 1:
+							location.href = '/user/cart/pay';
+							break;
+					}
+				}
+			})
+		}
+	});
 	//全选
 	$("#J_SelectAllCbx2").click(function () {
 		$('input[class="check"]').attr("checked", this.checked);

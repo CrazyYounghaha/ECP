@@ -79,7 +79,7 @@
 	                		console.log(msg);
 	                		switch (msg.data){
                               case 1:
-                              	location.href='/user/index/index';
+                                self.location = document.referrer;
                               	break;
                               case -1:
                               	_toastr("用户不存在！","top-right","error",false);
