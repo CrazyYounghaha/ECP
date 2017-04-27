@@ -10,32 +10,39 @@ export default class extends Base {
 	 * index action
 	 * @return {Promise} []
 	 */
-	indexAction(){
+	* indexAction(){
+		yield this.weblogin();
 		//auto render template file index/index.html
 		this.assign("style","index");
 		return this.display();
 	}
-	addressAction(){
+	* addressAction(){
+		yield this.weblogin();
 		this.assign("style","address");
 		return this.display();
 	}
-	informationAction(){
+	* informationAction(){
+		yield this.weblogin();
 		this.assign("style","information");
 		return this.display();
 	}
-	orderAction(){
+	* orderAction(){
+		yield this.weblogin();
 		this.assign("style","order");
 		return this.display();
 	}
-	commentAction(){
+	* commentAction(){
+		yield this.weblogin();
 		this.assign("style","comment");
 		return this.display();
 	}
-	consultationAction(){
+	* consultationAction(){
+		yield this.weblogin();
 		this.assign("style","");
 		return this.display();
 	}
-	suggestAction(){
+	* suggestAction(){
+		yield this.weblogin();
 		this.assign("style","");
 		return this.display();
 	}
