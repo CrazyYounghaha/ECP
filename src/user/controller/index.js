@@ -38,7 +38,10 @@ export default class extends Base {
 						'is_vip': 0,
 						'login_time': data.login_time
 					};
+					console.log(userInfo);
 					yield this.session('loginuser', userInfo);
+					let loginuserinfo = yield this.session('loginuser');
+					console.log(loginuserinfo);
 					return this.success(1);
 				} else {
 					console.log("password error");
