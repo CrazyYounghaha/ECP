@@ -16,7 +16,7 @@ export default class extends Base {
 	* loginAction() {
 		if (this.isPost()) {
 			let data = this.post();
-			console.log(data);
+			// console.log(data);
 			data.password = encryptPassword(data.password);
 			data.login_time = new Date().valueOf();
 			let user = yield this.model('user').where({name: data.name}).find();
@@ -29,14 +29,24 @@ export default class extends Base {
 						user_id: user.user_id,
 						login_time: dateformat('Y-m-d H:i:s', data.login_time)
 					});
-					yield this.model('user').where({name: data.name}).update({is_online: 1})
+					yield this.model('user').where({name: data.name}).update({is_online: 1});
+					let shoppingCart = yield this.model('cartdetail').join({
+						table: "shoppingcart",
+						join: "left",
+						on: ["shoppingcart_id", "shoppingcart_id"]
+					}).where({user_id: user.user_id}).count();//查找登录用户的购物车中有多少物品；
+					if(shoppingCart == 0){
+						shoppingCart.total = 0;
+					}
 					let userInfo = {
 						'id': user.user_id,
 						'username': data.name,
+						'phone': user.phone,
 						// 'mem_type': data.memberType,
 						'is_online': 1,
 						'is_vip': 0,
-						'login_time': data.login_time
+						'login_time': data.login_time,
+						'cart_total': shoppingCart
 					};
 					console.log(userInfo);
 					yield this.session('loginuser', userInfo);
@@ -73,6 +83,14 @@ export default class extends Base {
 			return this.success(1);
 		} else {
 			return this.display();
+		}
+	}
+
+	* logoutAction() {
+		if(this.islogin){
+			yield this.model("user").where({name: this.user.username}).update({is_online: 0});
+			yield this.session("loginuser",null);
+			return this.redirect('login');
 		}
 	}
 }

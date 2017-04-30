@@ -7,19 +7,19 @@
 
     <link href="/static/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css" />
     <link href="/static/shop/basic/css/demo.css" rel="stylesheet" type="text/css" />
+    <link href="/static/assets/plugins/toastr/toastr.css" rel="stylesheet" type="text/css">
 
     <% if ( style == "mainPage") { %>
     <title>首页</title>
     <link href="/static/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css" />
     <link href="/static/shop/css/hmstyle.css" rel="stylesheet" type="text/css" />
     <script src="/static/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
-    <script src="/static/AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>
     <% } %>
     <% if ( style == "cart") { %>
     <title>购物车</title>
     <link href="/static/shop/css/cartstyle.css" rel="stylesheet" type="text/css" />
     <link href="/static/shop/css/optstyle.css" rel="stylesheet" type="text/css" />
-    <script src="/static/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
+    <script src="/static/shop/js/jquery.js"></script>
     <% } %>
     <% if ( style == "introduction") { %>
     <title>商品页面</title>
@@ -32,7 +32,7 @@
 
     <script type="text/javascript" src="/static/AmazeUI-2.4.2/assets/js/amazeui.js"></script>
     <script type="text/javascript" src="/static/shop/js/jquery.imagezoom.min.js"></script>
-    <script type="text/javascript" src="/static/shop/js/jquery.flexslider.js"></script>
+    <!--<script type="text/javascript" src="/static/shop/js/jquery.flexslider.js"></script>-->
     <script type="text/javascript" src="/static/shop/js/list.js"></script>
     <% } %>
     <% if ( style == "pay") { %>
@@ -46,5 +46,14 @@
     <link href="/static/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
     <link href="/static/shop/css/sustyle.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="/static/shop/basic/js/jquery-1.7.min.js"></script>
+    <% } %>
+    <% if ( style == "search") { %>
+    <title>搜索页面</title>
+
+    <link href="/static/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css" />
+    <link href="/static/shop/css/seastyle.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="/static/shop/basic/js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="/static/shop/js/script.js"></script>
     <% } %>
 </head>

@@ -24,13 +24,9 @@
             <h4>商品细节</h4>
         </div>
         <div class="twlistNews">
-            <img src="/static/shop/images/tw1.jpg" />
-            <img src="/static/shop/images/tw2.jpg" />
-            <img src="/static/shop/images/tw3.jpg" />
-            <img src="/static/shop/images/tw4.jpg" />
-            <img src="/static/shop/images/tw5.jpg" />
-            <img src="/static/shop/images/tw6.jpg" />
-            <img src="/static/shop/images/tw7.jpg" />
+            <% for (var index in pictures ) { %>
+            <img src="<%- pictures[index].big_path -%>" />
+            <% } %>
         </div>
     </div>
     <div class="clear"></div>

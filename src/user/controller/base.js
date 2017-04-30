@@ -26,7 +26,7 @@ export default class extends think.controller.base {
 		let islogin = await this.is_login();
 		if (!islogin) {//未登录
 			//pc端跳转到错误页面
-			return think.statusAction(404, this.http);
+			return this.redirect('/index/login');
 		}
 	}
 }

@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="/static/AmazeUI-2.4.2/assets/css/amazeui.css"/>
     <link href="/static/shop/css/dlstyle.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/plugins/toastr/toastr.css" rel="stylesheet" type="text/css">
     <script src="/static/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 </head>
 
@@ -64,28 +65,28 @@
 
             <script>
                 $('#login').click(function(){
-                    var name = document.getElementById('user').value;
-                    var password = document.getElementById('password').value;
-                    if(name == ""||password == ""){
-                        alert('not null!');
-                    }
-                    var data = $('#loginForm').serialize();
-                    $.ajax({
-                        url: "/user/index/login",
+                	var name = document.getElementById('user').value;
+                	var password = document.getElementById('password').value;
+	                if(name == ""||password == ""){
+		                _toastr("用户名、密码不能为空！","top-right","error",false);
+	                }
+	                var data = $('#loginForm').serialize();
+	                $.ajax({
+	                	url: "/user/index/login",
                         method: "post",
                         data: data,
                         success: function (msg){
-                            console.log(msg);
-                            switch (msg.data){
-                                case 1:
-                                    location.href='/user/index/index';
-                                    break;
-                                case -1:
-                                    alert('用户不存在！');
-                                    break;
-                                case -2:
-                                    alert('密码错误！！');
-                                    break;
+	                		console.log(msg);
+	                		switch (msg.data){
+                              case 1:
+                                self.location = document.referrer;
+                              	break;
+                              case -1:
+                              	_toastr("用户不存在！","top-right","error",false);
+                              	break;
+                              case -2:
+                                _toastr("密码错误！","top-right","error",false);
+                              	break;
                             }
                         }
                     })

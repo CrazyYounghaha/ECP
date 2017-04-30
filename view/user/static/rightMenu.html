@@ -8,15 +8,28 @@
                 </a>
                 <div class="ibar_login_box status_login ">
                     <div class="avatar_box ">
+                        <% if(controller.islogin) { %>
+                        <p class="avatar_imgbox "><img src="/static/shop/images/no-img_mid_.jpg "/></p>
+                        <ul class="user_info ">
+                            <li>尊敬的会员 <%- controller.user.username -%></li>
+                            <li></li>
+                        </ul>
+                        <% } else { %>
                         <p class="avatar_imgbox "><img src="/static/shop/images/no-img_mid_.jpg "/></p>
                         <ul class="user_info ">
                             <li>用户未登录</li>
                             <li></li>
                         </ul>
+                        <% } %>
                     </div>
                     <div class="login_btnbox ">
+                        <% if(controller.islogin) { %>
+                        <a href="# " class="login_order ">我的订单</a>
+                        <a href="# " class="login_favorite ">注销登录</a>
+                        <% } else { %>
                         <a href="# " class="login_order ">我的订单</a>
                         <a href="# " class="login_favorite ">我的收藏</a>
+                        <% } %>
                     </div>
                     <i class="icon_arrow_white "></i>
                 </div>
@@ -28,7 +41,11 @@
                 <p>
                     购物车
                 </p>
+                <% if (controller.islogin ) { %>
+                <p class="cart_num "><%- controller.user.cart_total -%></p>
+                <% } else { %>
                 <p class="cart_num ">0</p>
+                <% } %>
             </div>
             <div id="asset " class="item ">
                 <a href="# ">

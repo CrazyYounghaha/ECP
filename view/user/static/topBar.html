@@ -3,11 +3,10 @@
         <div class="topMessage">
             <div class="menu-hd">
                 <!--改样式-->
-                <% if(controller.islogin) { %>
-                <div class="topMessage home">
-                    <div class="menu-hd"><i class="am-icon-male am-icon-fw"></i>您好，<%- controller.user.username -%></div>
-                </div>
-                <% } else { %>
+                <% if ( !controller.islogin) { %>
+                <!--<div class="topMessage home">-->
+                    <!--<div class="menu-hd"><i class="am-icon-male am-icon-fw"></i>您好，</div>-->
+                <!--</div>-->
                 <a href="/index/login" target="_top" class="am-btn-warning">亲，请登录</a>
                 <a href="/index/register" target="_top" class="am-btn-success">免费注册</a>
                 <% } %>
@@ -15,15 +14,29 @@
         </div>
     </ul>
     <ul class="message-r">
+        <% if ( controller.islogin) { %>
+        <div class="am-dropdown" id="login" data-am-dropdown>
+            <button class="am-btn am-btn-primary am-dropdown-toggle" style="border-color: white" data-am-dropdown-toggle>尊敬的会员：<%- controller.user.username -%>  <span class="am-icon-caret-down"></span></button>
+            <ul class="am-dropdown-content">
+                <!--<li class="am-dropdown-header">标题</li>-->
+                <li><a href="/user/index/logout">注销</a></li>
+                <!--<li class="am-active"><a href="#">最荣幸是</a></li>-->
+                <li><a href="/cart/index"><i class="am-icon-shopping-cart  am-icon-fw"></i>购物车<strong id="J_MiniCartNum" class="h"><%- controller.user.cart_total -%></strong></a></li>
+                <!--<li class="am-disabled"><a href="#">就站在光明的角落</a></li>-->
+                <!--<li class="am-divider"></li>-->
+                <!--<li><a href="#">天空海阔 要做最坚强的泡沫</a></li>-->
+            </ul>
+        </div>
+        <% } %>
         <div class="topMessage home">
             <div class="menu-hd"><a href="/index/index" target="_top" class="h">商城首页</a></div>
         </div>
         <div class="topMessage my-shangcheng">
             <div class="menu-hd MyShangcheng"><a href="/person/index" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
         </div>
-        <div class="topMessage mini-cart">
-            <div class="menu-hd"><a id="mc-menu-hd" href="/cart/index" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
-        </div>
+        <!--<div class="topMessage mini-cart">-->
+            <!--<div class="menu-hd"><a id="mc-menu-hd" href="/cart/index" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>-->
+        <!--</div>-->
         <div class="topMessage favorite">
             <div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
         </div>
