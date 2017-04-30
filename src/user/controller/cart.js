@@ -143,4 +143,36 @@ export default class extends Base {
 		this.assign("style", "success");
 		return this.display();
 	}
+
+	* addressaddAction(){
+		if(this.isPost()){
+			let post = this.post();
+			console.log(post);
+			let checkExist = yield this.model('address').where({
+				user_id: this.user.id,
+				receiver_name: post.receive,
+				phone: post.phone,
+				province: post.province,
+				city: post.city,
+				town: post.town,
+				full_address: post.full_address
+			}).select();
+			// console.log(checkExist);
+			if(!think.isEmpty(checkExist)){
+				return this.success(-1);//已存在一样的地址无需重复添加；
+			}else {//任何信息不同就创建新的
+				yield this.model('address').add({
+					receiver_name: post.receive,
+					phone: post.phone,
+					province: post.province,
+					city: post.city,
+					town: post.town,
+					full_address: post.full_address,
+					user_id: this.user.id
+				});
+				return this.success(1);
+			}
+			// yield this.model('user').where({name: post.receive})
+		}
+	}
 }

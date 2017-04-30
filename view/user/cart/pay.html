@@ -32,82 +32,85 @@
             </div>
             <div class="clear"></div>
             <ul>
-                <!--<div class="per-border"></div>-->
-                <!--<li class="user-addresslist defaultAddr">-->
+                <% for ( var index1 in address ) { %>
+                <% if (index1 == 0 ) { %>
+                <div class="per-border"></div>
+                <li class="user-addresslist defaultAddr">
+                    <div class="address-left">
+                        <div class="user DefaultAddr">
+                            <span class="buy-address-detail">
+                                <span class="buy-user"><%- address[index1].receiver_name -%> </span>
+                                <span class="buy-phone"><%- address[index1].phone -%></span>
+                            </span>
+                        </div>
+                        <div class="default-address DefaultAddr">
+                            <span class="buy-line-title buy-line-title-type">收货地址：</span>
+                            <span class="buy--address-detail">
+								   <span class="province"><%- address[index1].province -%></span>
+										<span class="city"><%- address[index1].city -%></span>
+										<span class="dist"><%- address[index1].town -%></span>
+										<span class="street"><%- address[index1].full_address -%></span>
+										</span>
 
-                    <!--<div class="address-left">-->
-                        <!--<div class="user DefaultAddr">-->
+                            </span>
+                        </div>
+                        <ins class="deftip">默认地址</ins>
+                    </div>
+                    <div class="address-right">
+                        <a href="#">
+                            <span class="am-icon-angle-right am-icon-lg"></span></a>
+                    </div>
+                    <div class="clear"></div>
 
-										<!--<span class="buy-address-detail">-->
-                   <!--<span class="buy-user">艾迪 </span>-->
-										<!--<span class="buy-phone">15888888888</span>-->
-										<!--</span>-->
-                        <!--</div>-->
-                        <!--<div class="default-address DefaultAddr">-->
-                            <!--<span class="buy-line-title buy-line-title-type">收货地址：</span>-->
-                            <!--<span class="buy&#45;&#45;address-detail">-->
-								   <!--<span class="province">湖北</span>省-->
-										<!--<span class="city">武汉</span>市-->
-										<!--<span class="dist">洪山</span>区-->
-										<!--<span class="street">雄楚大道666号(中南财经政法大学)</span>-->
-										<!--</span>-->
+                    <div class="new-addr-btn">
+                        <a href="#" class="hidden">设为默认</a>
+                        <span class="new-addr-bar hidden">|</span>
+                        <a href="#">编辑</a>
+                        <span class="new-addr-bar">|</span>
+                        <a href="javascript:void(0);" onclick="">删除</a>
+                    </div>
 
-                            <!--</span>-->
-                        <!--</div>-->
-                        <!--<ins class="deftip">默认地址</ins>-->
-                    <!--</div>-->
-                    <!--<div class="address-right">-->
-                        <!--<a href="../person/address.html">-->
-                            <!--<span class="am-icon-angle-right am-icon-lg"></span></a>-->
-                    <!--</div>-->
-                    <!--<div class="clear"></div>-->
+                </li>
+                <% } else { %>
+                <!--非默认地址-->
+                <div class="per-border"></div>
+                <li class="user-addresslist">
+                    <div class="address-left">
+                        <div class="user DefaultAddr">
+                            <span class="buy-address-detail">
+                                <span class="buy-user"><%- address[index1].receiver_name -%></span>
+								<span class="buy-phone"><%- address[index1].phone -%></span>
+                            </span>
+                        </div>
+                        <div class="default-address DefaultAddr">
+                            <span class="buy-line-title buy-line-title-type">收货地址：</span>
+                            <span class="buy--address-detail">
+								   <span class="province"><%- address[index1].province -%></span>
+										<span class="city"><%- address[index1].city -%></span>
+										<span class="dist"><%- address[index1].town -%></span>
+										<span class="street"><%- address[index1].full_address -%></span>
+										</span>
 
-                    <!--<div class="new-addr-btn">-->
-                        <!--<a href="#" class="hidden">设为默认</a>-->
-                        <!--<span class="new-addr-bar hidden">|</span>-->
-                        <!--<a href="#">编辑</a>-->
-                        <!--<span class="new-addr-bar">|</span>-->
-                        <!--<a href="javascript:void(0);" onclick="">删除</a>-->
-                    <!--</div>-->
+                            </span>
+                        </div>
+                        <ins class="deftip hidden">默认地址</ins>
+                    </div>
+                    <div class="address-right">
+                        <span class="am-icon-angle-right am-icon-lg"></span>
+                    </div>
+                    <div class="clear"></div>
 
-                <!--</li>-->
-                <!--<div class="per-border"></div>-->
-                <!--<li class="user-addresslist">-->
-                    <!--<div class="address-left">-->
-                        <!--<div class="user DefaultAddr">-->
+                    <div class="new-addr-btn">
+                        <a href="#">设为默认</a>
+                        <span class="new-addr-bar">|</span>
+                        <a href="#">编辑</a>
+                        <span class="new-addr-bar">|</span>
+                        <a href="javascript:void(0);"  onclick="">删除</a>
+                    </div>
 
-										<!--<span class="buy-address-detail">-->
-                   <!--<span class="buy-user">艾迪 </span>-->
-										<!--<span class="buy-phone">15877777777</span>-->
-										<!--</span>-->
-                        <!--</div>-->
-                        <!--<div class="default-address DefaultAddr">-->
-                            <!--<span class="buy-line-title buy-line-title-type">收货地址：</span>-->
-                            <!--<span class="buy&#45;&#45;address-detail">-->
-								   <!--<span class="province">湖北</span>省-->
-										<!--<span class="city">武汉</span>市-->
-										<!--<span class="dist">武昌</span>区-->
-										<!--<span class="street">东湖路75号众环大厦9栋9层999</span>-->
-										<!--</span>-->
-
-                            <!--</span>-->
-                        <!--</div>-->
-                        <!--<ins class="deftip hidden">默认地址</ins>-->
-                    <!--</div>-->
-                    <!--<div class="address-right">-->
-                        <!--<span class="am-icon-angle-right am-icon-lg"></span>-->
-                    <!--</div>-->
-                    <!--<div class="clear"></div>-->
-
-                    <!--<div class="new-addr-btn">-->
-                        <!--<a href="#">设为默认</a>-->
-                        <!--<span class="new-addr-bar">|</span>-->
-                        <!--<a href="#">编辑</a>-->
-                        <!--<span class="new-addr-bar">|</span>-->
-                        <!--<a href="javascript:void(0);"  onclick="">删除</a>-->
-                    <!--</div>-->
-
-                <!--</li>-->
+                </li>
+                <% } %>
+                <% } %>
 
             </ul>
 
@@ -315,51 +318,42 @@
     <hr/>
 
     <div class="am-u-md-12">
-        <form class="am-form am-form-horizontal">
+        <form class="am-form am-form-horizontal" id="addAddress">
 
             <div class="am-form-group">
                 <label for="user-name" class="am-form-label">收货人</label>
                 <div class="am-form-content">
-                    <input type="text" id="user-name" placeholder="收货人">
+                    <input type="text" name="receive" id="user-name" placeholder="收货人">
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="user-phone" class="am-form-label">手机号码</label>
                 <div class="am-form-content">
-                    <input id="user-phone" placeholder="手机号必填" type="email">
+                    <input id="user-phone" name="phone"  placeholder="手机号必填" type="tel">
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="user-phone" class="am-form-label">所在地</label>
                 <div class="am-form-content address">
-                    <select data-am-selected>
-                        <option value="a">浙江省</option>
-                        <option value="b">湖北省</option>
-                    </select>
-                    <select data-am-selected>
-                        <option value="a">温州市</option>
-                        <option value="b">武汉市</option>
-                    </select>
-                    <select data-am-selected>
-                        <option value="a">瑞安区</option>
-                        <option value="b">洪山区</option>
-                    </select>
+                    <select  id="province" name="province"></select>
+                    <select id="city" name="city"></select>
+                    <select id="town" name="town"></select>
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="user-intro" class="am-form-label">详细地址</label>
                 <div class="am-form-content">
-                    <textarea class="" rows="3" id="user-intro" placeholder="输入详细地址"></textarea>
+                    <textarea class="" rows="3" id="user-intro" name="full_address" placeholder="输入详细地址"></textarea>
                     <small>100字以内写出你的详细地址...</small>
                 </div>
             </div>
 
             <div class="am-form-group theme-poptit">
                 <div class="am-u-sm-9 am-u-sm-push-3">
-                    <div class="am-btn am-btn-danger">保存</div>
+                    <div class="am-btn am-btn-danger" id="savePlace">保存</div>
                     <div class="am-btn am-btn-danger close">取消</div>
                 </div>
             </div>
@@ -370,5 +364,42 @@
 
 <div class="clear"></div>
 </body>
+<script type="text/javascript" src="/static/shop/js/area.js"></script>
+<script>
+    $('#savePlace').click(function(){
+//	    _toastr("click?","top-right","error",false);
+      var user_name = document.getElementById('user-name').value;
+      var user_phone = document.getElementById('user-phone').value;
+      var user_intro = document.getElementById('user-intro').value;
+      if( user_name == "" || user_phone == "" || user_intro == "") _toastr("不能为空！老铁","top-right","error",false);
+    	var data = $('#addAddress').serialize();
+
+    	$.ajax({
+    		url: "/user/cart/addressadd",
+            type: "post",
+            data: data,
+            success: function(msg){
+//    			console.log(msg);
+              switch (msg.data){
+                case -1:
+                	_toastr("已经存在一样的地址了！老铁","top-right","info",false);
+                	break;
+                case 1:
+	                location.reload(true);
+	                break;
+              }
+            }
+        })
+    })
+    $("#user-phone").blur(function () {
+	    var phone = this.value;
+	    var RegCellPhone = /^(1)([0-9]{10})?$/;
+	    var falg=phone.search(RegCellPhone);
+	    if (falg==-1){
+		    _toastr("手机号不合法！","top-right","error",false);
+		    this.focus();
+	    }
+    });
+</script>
 
 </html>
