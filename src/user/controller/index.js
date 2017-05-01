@@ -48,10 +48,7 @@ export default class extends Base {
 						'login_time': data.login_time,
 						'cart_total': shoppingCart
 					};
-					console.log(userInfo);
 					yield this.session('loginuser', userInfo);
-					let loginuserinfo = yield this.session('loginuser');
-					console.log(loginuserinfo);
 					return this.success(1);
 				} else {
 					console.log("password error");
