@@ -1,7 +1,12 @@
 <div class="nav-navicon admin-main admin-sidebar">
+    <!--改样式-->
+    <% if(controller.isadminlogin) { %>
+    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;">当前管理员：<%- controller.admin.admin_name -%></div>
+    <% } else { %>
+    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;" onclick="window.open('/admin/index/login','_self')"> 点击登录</div>
+    <% } %>
 
 
-    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;"> 欢迎系统管理员：清风抚雪</div>
     <div class="sideMenu">
         <h3 class="am-icon-flag"><em></em> <a href="#">商品管理</a></h3>
         <ul>
