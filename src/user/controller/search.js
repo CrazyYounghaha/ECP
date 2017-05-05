@@ -14,7 +14,7 @@ export default class extends Base {
 		//auto render template file search/index.html
 		if(this.isGet()){
 			let keyWord = this.get();
-			let productType = yield this.model("product_type").where({name: keyWord.searchInfo}).find();
+			let productType = yield this.model("product_type").where({tname: keyWord.searchInfo}).find();
 			let productDetails = yield this.model("product").where({type: productType.product_type_id}).select();
 			// console.log(productDetails);
 			this.assign("style","search");

@@ -8,19 +8,19 @@
     <div class=" admin-content">
 
         <div class="daohang">
-            <ul>
-                <li><a href="/admin/index"><button type="button" class="am-btn am-btn-default am-radius am-btn-xs"> 首页 </button></a></li>
-                <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">帮助中心<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-                <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">奖金管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-                <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">产品管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-            </ul>
+            <!--<ul>-->
+                <!--<li><a href="/admin/index"><button type="button" class="am-btn am-btn-default am-radius am-btn-xs"> 首页 </button></a></li>-->
+                <!--<li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">帮助中心<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>-->
+                <!--<li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">奖金管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>-->
+                <!--<li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">产品管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>-->
+            <!--</ul>-->
         </div>
         <div class="admin-biaogelist">
 
             <div class="listbiaoti am-cf">
                 <ul class="am-icon-flag on"> 栏目名称</ul>
 
-                <dl class="am-icon-home" style="float: right;"> 当前位置： 首页 > <a href="#">商品列表</a></dl>
+                <dl class="am-icon-home" style="float: right;"> 当前位置： 首页 > <a href="/admin/product/index">商品列表</a></dl>
 
 
             </div>
@@ -81,8 +81,8 @@
                     </thead>
                     <tbody>
                     <%productsList.forEach(function(product){%>
-                    <tr>
-                        <td><input type="checkbox" /></td>
+                    <tr id='tr_<%-product.product_id%>'>
+                        <td><input id='check_<%-product.product_id%>' type="checkbox" /></td>
 
                         <td><%-product.product_id%></td>
                         <td><a href="#"><%-product.name%></a></td>
@@ -97,10 +97,8 @@
                         <td class="am-hide-sm-only"><%-dateformat('Y-m-d H:i:s', product.update_time)%></td>
                         <td><div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button class="am-btn am-btn-default am-btn-xs am-text-success am-round"><span class="am-icon-search"></span> </button>
                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-round"><span class="am-icon-pencil-square-o"></span></button>
-                                <button class="am-btn am-btn-default am-btn-xs am-text-warning  am-round"><span class="am-icon-copy"></span></button>
-                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-round"><span class="am-icon-trash-o"></span></button>
+                                <button id='btn_del_<%-product.product_id%>' class="btn-del am-btn am-btn-default am-btn-xs am-text-danger am-round"><span class="am-icon-trash-o"></span></button>
                             </div>
                         </div></td>
                     </tr>
@@ -109,13 +107,9 @@
                 </table>
 
                 <div class="am-btn-group am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 删除</button>
                     <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 上架</button>
                     <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 下架</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 移动</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 移动</button>
+                    <button type="button" class="am-btn am-btn-default" onclick="window.open('/admin/product/add')"><span class="am-icon-plus"></span> 新增</button>
                     <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
                 </div>
 
@@ -141,7 +135,7 @@
 
             <div class="foods">
                 <ul>
-                    版权所有@2015
+                    版权所有@2017
                 </ul>
                 <dl>
                     <a href="" title="返回头部" class="am-icon-btn am-icon-arrow-up"></a>
@@ -171,7 +165,44 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="/static/admin/js/amazeui.min.js"></script>
 <!--<![endif]-->
+<script>
+    $(function () {
+        $('.btn-del').on('click',function () {
+//            alert(delConfirm());
+            let product_id = this.id.substring(8);
+            if(delConfirm()){
+//                return false;
+                $.ajax({type:"POST",url:"/admin/product/delete",dataType:"json",
+                    data:{product_id:product_id},
+                    success:function(result){
+                        console.log(result);
+                        if(result.data == 1){
+                            alert("删除成功");
+                            location.href = "/admin/product/index";
+                        }
+                        else {
+                            alert("删除失败");
+                        }
 
+                    },complete:function(){
+//
+                    },error:function(e){
+                        console.log(e);
+                    }});
+            }
+            return false;
+        })
+    })
+    //删除弹窗二次确认
+    function delConfirm() {
+        var msg = "您真的确定要删除吗？\n\n请确认！";
+        if (confirm(msg)==true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+</script>
 
 </body>
 </html>
