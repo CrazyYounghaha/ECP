@@ -11,6 +11,7 @@ export default class extends Base {
 	 * @return {Promise} []
 	 */
 	*indexAction(){
+        yield this.weblogin();
 		//auto render template file index/index.html
 		this.assign("style","product");
 		//返回商品类型列表
@@ -49,11 +50,13 @@ export default class extends Base {
 
 
 	}
-	storeAction(){
+	*storeAction(){
+        yield this.weblogin();
 		this.assign("style","store");
 		return this.display();
 	}
 	*addAction(){
+        yield this.weblogin();
         var _this = this;
 		this.assign("style","add");
         //返回商品类型列表
@@ -117,26 +120,37 @@ export default class extends Base {
 		return this.display();
 	}
 	*deleteAction(){
+        yield this.weblogin();
         if(this.isAjax()){
-            let product_id = this.post('product_id');
-            console.log("delete "+product_id);
-            let model = this.model('product');
-            try{
-                yield model.startTrans();//事务处理
-                let product_pics_paths = yield this.model('picture').limit(1).where({product_id:product_id}).field('small_path').select();
-                if(!think.isEmpty(product_pics_paths)) {
-                    let product_pics_path = product_pics_paths[0].small_path;
-                    let product_pics_dir = product_pics_path.substring(0, product_pics_path.lastIndexOf('/'));
-                    //删除图片
-                    yield this.deleteFolderRecursive(think.RESOURCE_PATH.replace(new RegExp(/(\\)/g), '/') + product_pics_dir);
-                }
+            let product_ids_str = this.post('product_ids');
+            product_ids_str = product_ids_str.substring(0,product_ids_str.length-1);
+            let product_ids = product_ids_str.split(',');
+            // return this.success(1);
 
-                yield this.model('picture').where({product_id: ['=', product_id]}).delete();
-                yield model.where({product_id: ['=', product_id]}).delete();
-                yield model.commit();
-            }catch(e){
-                yield model.rollback();
-                return this.success(-1);
+            for(let i = 0;i < product_ids.length;i++){
+
+                yield this.model('product').close_foreign();
+                let product_id = product_ids[i];
+                console.log("delete "+product_id);
+                let model = this.model('product');
+                try{
+                    yield model.startTrans();//事务处理
+                    let product_pics_paths = yield this.model('picture').limit(1).where({product_id:product_id}).field('small_path').select();
+                    if(!think.isEmpty(product_pics_paths)) {
+                        let product_pics_path = product_pics_paths[0].small_path;
+                        let product_pics_dir = product_pics_path.substring(0, product_pics_path.lastIndexOf('/'));
+                        //删除图片
+                        yield this.deleteFolderRecursive(think.RESOURCE_PATH.replace(new RegExp(/(\\)/g), '/') + product_pics_dir);
+                    }
+
+                    yield this.model('picture').where({product_id: ['=', product_id]}).delete();
+                    yield model.where({product_id: ['=', product_id]}).delete();
+                    yield model.commit();
+                }catch(e){
+                    yield model.rollback();
+                    return this.success(-1);
+                }
+                yield this.model('product').open_foreign();
             }
             return this.success(1);
         }
