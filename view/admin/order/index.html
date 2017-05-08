@@ -9,12 +9,7 @@
     <div class=" admin-content">
 
         <div class="daohang">
-            <ul>
-                <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs"> 首页 </li>
-                <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">帮助中心<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-                <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">奖金管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-                <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">产品管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
-            </ul>
+
         </div>
 
 
@@ -90,7 +85,7 @@
             <div class="listbiaoti am-cf">
                 <ul class="am-icon-flag on"> 订单列表</ul>
 
-                <dl class="am-icon-home" style="float: right;">当前位置： 首页 > <a href="#">商品列表</a></dl>
+                <dl class="am-icon-home" style="float: right;">当前位置： 订单管理 > <a href="#">订单列表</a></dl>
 
                 <dl>
                     <button type="button" class="am-btn am-btn-danger am-round am-btn-xs am-icon-plus" data-am-modal="{target: '#my-popup'}"> 补充线订单</button>
@@ -99,73 +94,108 @@
 
             </div>
 
+            <div class="am-btn-toolbars am-btn-toolbar am-kg am-cf">
+                <form id="search_form" method="post" action="/admin/order/index">
+                    <ul>
+
+                        <li style="margin-right: 0;">
+                            <span class="tubiao am-icon-calendar"></span>
+                            <input name="order_startdate" type="text" class="am-form-field am-input-sm am-input-zm  am-icon-calendar" placeholder="下单开始日期" data-am-datepicker="{theme: 'success',}"  readonly/>
+                        </li>
+                        <li style="margin-left: -4px;">
+                            <span class="tubiao am-icon-calendar"></span>
+                            <input name="order_enddate" type="text" class="am-form-field am-input-sm am-input-zm  am-icon-calendar" placeholder="下单结束日期" data-am-datepicker="{theme: 'success',}"  readonly/>
+                        </li>
+                        <li style="margin-right: 0;">
+                            <span class="tubiao am-icon-calendar"></span>
+                            <input name="pay_startdate" type="text" class="am-form-field am-input-sm am-input-zm  am-icon-calendar" placeholder="支付开始日期" data-am-datepicker="{theme: 'success',}"  readonly/>
+                        </li>
+                        <li style="margin-left: -4px;">
+                            <span class="tubiao am-icon-calendar"></span>
+                            <input name="pay_enddate" type="text" class="am-form-field am-input-sm am-input-zm  am-icon-calendar" placeholder="支付结束日期" data-am-datepicker="{theme: 'success',}"  readonly/>
+                        </li>
+                        <li>
+                            <div class="am-btn-group am-btn-group-xs" style="z-index: 1024">
+                                <select name="pay_type" data-am-selected="{btnWidth: 90, btnSize: 'sm', btnStyle: 'default'}">
+                                    <option value=-1>付款方式</option>
+                                    <%payType.forEach(function(type,index){%>
+                                    <option value=<%-index%>><%-type%></option>
+                                    <%})%>
+                                </select>
+                            </div>
+                        </li>
+
+                        <li style="margin-left: -10px;">
+                            <div class="am-btn-group am-btn-group-xs" style="z-index: 1024">
+                                <select name="order_status" data-am-selected="{btnWidth: 90, btnSize: 'sm', btnStyle: 'default'}">
+                                    <option value=-1>订单状态</option>
+                                    <%orderStatus.forEach(function(status,index){%>
+                                    <option value=<%-index%>><%-status%></option>
+                                    <%})%>
+                                </select>
+                            </div>
+                        </li>
+                        <li><input name="keyword_buyer" type="text" class="am-form-field am-input-sm am-input-xm" placeholder="消费者搜索" /></li>
+                        <li><button type="submit" class="am-btn am-radius am-btn-xs am-btn-success" style="margin-top: -1px;">搜索</button></li>
+                    </ul>
+                </form>
+            </div>
+
+
 
             <form class="am-form am-g">
                 <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped am-table-hover">
                     <thead>
                     <tr class="am-success">
-                        <th class="table-check"><input type="checkbox" /></th>
+                        <th class="table-check"><input id="check_all" type="checkbox" /></th>
 
-                        <th class="table-id">ID</th>
-                        <th class="table-title">商品名称</th>
-                        <th class="table-type">购买数量</th>
-                        <th class="table-author am-hide-sm-only">购买人</th>
-                        <th class="table-author am-hide-sm-only">地址</th>
-                        <th class="table-date am-hide-sm-only">购买日期</th>
-                        <th width="130px" class="table-set">操作</th>
+                        <th>ID</th>
+                        <th>购买数量</th>
+                        <th>共消费</th>
+                        <th>购买人</th>
+                        <th>下单时间</th>
+                        <th>付款时间</th>
+                        <th>付款方式</th>
+                        <th>订单状态</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <%orderList.forEach(function(order){%>
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><input id="check_<%-order.order_id%>" type="checkbox" /></td>
 
-                        <td>14</td>
-                        <td><a href="#">Business management</a></td>
-                        <td>3件 （消费455个积分）</td>
-                        <td class="am-hide-sm-only">访问</td><td class="am-hide-sm-only">访问</td>
-                        <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
+                        <td><%-order.order_id%></td>
+                        <td><a href="#"><%-order.total_count%></a></td>
+                        <td><%-order.total_pay%></td>
+                        <td><%-order.name%></td>
+                        <td><%-dateformat('Y-m-d H:i:s', order.order_time)%></td>
+                        <%if(order.pay_time == null){%>
+                        <td>暂无支付时间信息</td>
+                        <%}else{%>
+                        <td><%-dateformat('Y-m-d H:i:s', order.pay_time)%></td>
+                        <%}%>
+                        <td><%-payType[order.pay_type]%></td>
+                        <td><%-orderStatus[order.status]%></td>
                         <td>
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button class="am-btn am-btn-default am-btn-xs am-text-success am-round"><span class="am-icon-search" title="查看订单详情"></span> </button>
                                     <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-round" data-am-modal="{target: '#my-popup'}" title="修改订单"><span class="am-icon-pencil-square-o"></span></button>
-                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-round" title="删除订单"><span class="am-icon-trash-o" ></span></button>
+                                    <button id='btn_del_<%-order.order_id%>' class="btn-del am-btn am-btn-default am-btn-xs am-text-danger am-round" title="删除订单"><span class="am-icon-trash-o" ></span></button>
                                 </div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td>
+                    <%})%>
 
-                        <td>15</td>
-                        <td><a href="#">Business management</a></td>
-                        <td>default</td>
-                        <td class="am-hide-sm-only"><i class="am-icon-close am-text-primary"></i></td><td class="am-hide-sm-only">访问</td>
-                        <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
-                        <td>
-
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button class="am-btn am-btn-default am-btn-xs am-text-success am-round"><span class="am-icon-search" title="查看订单详情"></span> </button>
-                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-round" data-am-modal="{target: '#my-popup'}" title="修改订单"><span class="am-icon-pencil-square-o"></span></button>
-                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-round" title="删除订单"><span class="am-icon-trash-o" ></span></button>
-                                </div>
-                            </div>
-
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
 
                 <div class="am-btn-group am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 删除</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 上架</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 下架</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 移动</button>
                     <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
                     <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 移动</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
+                    <button id="btn_del_selectBox" type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
                 </div>
 
                 <ul class="am-pagination am-fr">
@@ -190,7 +220,7 @@
 
             <div class="foods">
                 <ul>
-                    版权所有@2015
+                    版权所有@2017
                 </ul>
                 <dl>
                     <a href="" title="返回头部" class="am-icon-btn am-icon-arrow-up"></a>
@@ -221,6 +251,84 @@
 <script src="/static/admin/js/amazeui.min.js"></script>
 <!--<![endif]-->
 
+<script>
+    $(function () {
+        $('#check_all').on('change',function () {
+            let checkboxes = $("table tbody input[type='checkbox']");
+            if(this.checked){
+                for (let i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = true;
+                }
+            }
+            else{
+                for (let i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = false;
+                }
+            }
+        });
+        $('.btn-del').on('click', function () {
+            let order_id = this.id.substring(8);
+            let IDs = order_id+",";
+
+            if (delConfirm()) {
+                ajaxDelete(IDs);
+            }
+            return false;
+        });
+
+        $('#btn_del_selectBox').on('click', function () {
+            let checkboxes = $("table tbody input[type='checkbox']");
+//        alert(checkboxes.length);
+            let IDs = "";
+            let count = 0;
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    let curid = checkboxes[i].id.replace('check_', '');
+                    IDs += curid+",";
+                    count++;
+                }
+            }
+            if (count <= 0)
+                alert('您未选中任何信息');
+            else {
+                if (delConfirm()) {
+                    ajaxDelete(IDs);//单选或多选共同调用
+                }
+            }
+        });
+        function ajaxDelete(IDs) {
+            $.ajax({
+                type: "POST", url: "/admin/order/delete", dataType: "json",
+                data: {product_ids: IDs},
+                success: function (result) {
+                    console.log(result);
+                    if (result.data == 1) {
+                        alert("删除成功"+IDs);
+                        location.href = "/admin/order/index";
+                    }
+                    else {
+                        alert("删除失败");
+                    }
+
+                }, complete: function () {
+//
+                }, error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+        //删除弹窗二次确认
+        function delConfirm() {
+            var msg = "您真的确定要删除吗？\n\n请确认！";
+            if (confirm(msg) == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    })
+</script>
 
 
 </body>

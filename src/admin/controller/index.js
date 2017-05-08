@@ -10,11 +10,8 @@ export default class extends Base {
   *indexAction(){
     //auto render template file index/index.html
     this.assign("style", "index");
-    let islogin = yield this.is_adminlogin();
-    if(!islogin)
-        return this.redirect("/admin/index/login");
-    else
-        return this.display();
+    yield this.weblogin();
+    return this.display();
   }
   *loginAction() {
       if (this.isPost()) {
