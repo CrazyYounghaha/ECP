@@ -2,37 +2,26 @@
 <body>
 <% include ../static/topBar.html %>
 <div class="am-cf admin-main">
-
     <% include ../static/leftMenu.html %>
-
     <div class=" admin-content">
-
         <div class="daohang">
 
         </div>
-        <div class="am-popup am-popup-inner" id="my-popup" style="width: 270px;height:290px;margin: 0 auto;margin-top: -100px;margin-left: -100px;">
-
-            <div class="am-popup-hd">
-                <h4 class="am-popup-title">修改订单状态</h4>
-                <span data-am-modal-close
-                      class="am-close">&times;</span>
-            </div>
 
 
-            </div>
-        </div>
         <div class="admin-biaogelist">
-
             <div class="listbiaoti am-cf">
-                <ul class="am-icon-flag on"> 栏目名称</ul>
-
-                <dl class="am-icon-home" style="float: right;"> 当前位置： 商品管理 > <a href="/admin/product/index">商品列表</a></dl>
-
+                <ul class="am-icon-flag on">
+                    库存管理
+                </ul>
+                <dl class="am-icon-home" style="float: right;">
+                    当前位置： 首页 > <a href="/admin/store/index">进货历史</a>
+                </dl>
 
             </div>
 
             <div class="am-btn-toolbars am-btn-toolbar am-kg am-cf">
-                <form id="search_form" method="post" action="/admin/product/index">
+                <form id="search_form" method="post" action="/admin/store/index">
                     <ul>
 
                         <li style="margin-right: 0;">
@@ -43,23 +32,14 @@
                             <span class="tubiao am-icon-calendar"></span>
                             <input name="enddate" type="text" class="am-form-field am-input-sm am-input-zm  am-icon-calendar" placeholder="结束日期" data-am-datepicker="{theme: 'success',}"  readonly/>
                         </li>
-                        <li>
-                            <div class="am-btn-group am-btn-group-xs" style="z-index: 1024">
-                                <select name="is_onsale" data-am-selected="{btnWidth: 90, btnSize: 'sm', btnStyle: 'default'}">
-                                    <option value="-1">商品状态</option>
-                                    <option value="1">下架</option>
-                                    <option value="1">上架</option>
-                                    <option value="0">失效</option>
-                                </select>
-                            </div>
-                        </li>
+
 
                         <li style="margin-left: -10px;">
                             <div class="am-btn-group am-btn-group-xs" style="z-index: 1024">
                                 <select name="product_type" data-am-selected="{btnWidth: 90, btnSize: 'sm', btnStyle: 'default',maxHeight:150}">
                                     <option value="-1">商品分类</option>
                                     <%product_typeList.forEach(function(product_type){%>
-                                        <option value=<%-product_type.product_type_id%>><%-product_type.tname%></option>
+                                    <option value=<%-product_type.product_type_id%>><%-product_type.tname%></option>
                                     <%})%>
                                 </select>
                             </div>
@@ -72,56 +52,40 @@
 
 
             <form class="am-form am-g">
-                <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped">
+                <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped am-table-hover">
                     <thead>
                     <tr class="am-success">
-                        <th class="table-check"><input id=check_all type="checkbox" /></th>
-
-                        <th class="table-id">ID</th>
+                        <th class="table-check"><input id="check_all" type="checkbox" /></th>
+                        <th class="table-id am-text-center">ID</th>
                         <th class="table-title">商品名称</th>
                         <th class="table-type">商品类别</th>
-                        <th class="table-price">商品价格</th>
-                        <th class="table-author am-hide-sm-only">商品状态</th>
-                        <th class="table-date am-hide-sm-only">修改日期</th>
-                        <th width="163px" class="table-set">操作</th>
+                        <th class="table-type">进货数量</th>
+                        <th class="table-time">进货时间</th>
+                        <th width="125px" class="table-set">操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <%productsList.forEach(function(product){%>
-                    <tr id='tr_<%-product.product_id%>'>
-                        <td><input id='check_<%-product.product_id%>' type="checkbox" /></td>
 
-                        <td><%-product.product_id%></td>
-                        <td><a href="/user/introduction/index?productId=<%-product.product_id%>" target="_blank"><%-product.name%></a></td>
-                        <td><%-product.tname%></td>
-                        <td><%-product.price%></td>
-                        <%if(product.is_onsale === 0){%>
-                        <td class="am-hide-sm-only" style="color:red ;">下架</td>
-                        <%}else if(product.is_onsale === 1){%>
-                        <td class="am-hide-sm-only" style="color: #0c7edf;">上架</td>
-                        <%}else if(product.is_onsale === 2){%>
-                        <td class="am-hide-sm-only" style="color: #8c8989">失效宝贝</td>
-                        <%}%>
-
-                        <td class="am-hide-sm-only"><%-dateformat('Y-m-d H:i:s', product.update_time)%></td>
+                    <%addStoreRecordList.forEach(function(addStoreRecord){%>
+                    <tr>
+                        <td><input type="checkbox" id="check_store_<%-addStoreRecord.add_store_record_id%>" /></td>
+                        <td class="am-text-center"><%-addStoreRecord.add_store_record_id%></td>
+                        <td><%-addStoreRecord.name%></td>
+                        <td><%-product_typeList[addStoreRecord.type-1].tname%></td>
+                        <td><%-addStoreRecord.add_store_count%></td>
+                        <td><%-dateformat('Y-m-d H:i:s', addStoreRecord.add_store_time)%></td>
                         <td><div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-round" onclick="window.open('/admin/product/showoneproduct?productid=<%-product.product_id%>');return false;"><span class="am-icon-pencil-square-o"></span></button>
-                                <button id='btn_del_<%-product.product_id%>' class="btn-del am-btn am-btn-default am-btn-xs am-text-danger am-round"><span class="am-icon-trash-o"></span></button>
+                                <button id="btn_del_rec_<%-addStoreRecord.add_store_record_id%>" class="btn-del-rec am-btn am-btn-default am-btn-xs am-text-danger am-round"  title="删除"><span class="am-icon-trash-o"></span></button>
                             </div>
                         </div></td>
                     </tr>
                     <%})%>
                     </tbody>
                 </table>
-
                 <div class="am-btn-group am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 上架</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 下架</button>
-                    <button type="button" class="am-btn am-btn-default" onclick="window.open('/admin/product/add')"><span class="am-icon-plus"></span> 新增</button>
                     <button id="btn_del_selectBox" type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
                 </div>
-
                 <ul class="am-pagination am-fr">
                     <li class="am-disabled"><a href="#">«</a></li>
                     <li class="am-active"><a href="#">1</a></li>
@@ -131,16 +95,8 @@
                     <li><a href="#">5</a></li>
                     <li><a href="#">»</a></li>
                 </ul>
-
-
-
-
                 <hr />
-                <p>注：.....</p>
             </form>
-
-
-
 
             <div class="foods">
                 <ul>
@@ -150,17 +106,8 @@
                     <a href="" title="返回头部" class="am-icon-btn am-icon-arrow-up"></a>
                 </dl>
             </div>
-
-
-
-
         </div>
-
     </div>
-
-
-
-
 </div>
 
 <!--[if lt IE 9]>
@@ -189,11 +136,9 @@
                 }
             }
         });
-        $('.btn-del').on('click', function () {
-//            alert(delConfirm());
-            let product_id = this.id.substring(8);
-            let IDs = product_id+",";
-
+        $('.btn-del-rec').on('click', function () {
+            let record_id = this.id.replace('btn_del_rec_','');
+            let IDs = record_id+",";
             if (delConfirm()) {
                 ajaxDelete(IDs);
             }
@@ -202,16 +147,18 @@
 
         $('#btn_del_selectBox').on('click', function () {
             let checkboxes = $("table tbody input[type='checkbox']");
-//        alert(checkboxes.length);
+
             let IDs = "";
             let count = 0;
             for (let i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked) {
-                    let curid = checkboxes[i].id.replace('check_', '');
+//                    alert(checkboxes[i].id);
+                    let curid = checkboxes[i].id.replace('check_store_', '');
                     IDs += curid+",";
                     count++;
                 }
             }
+
             if (count <= 0)
                 alert('您未选中任何信息');
             else {
@@ -222,13 +169,13 @@
         });
         function ajaxDelete(IDs) {
             $.ajax({
-                type: "POST", url: "/admin/product/delete", dataType: "json",
-                data: {product_ids: IDs},
+                type: "POST", url: "/admin/store/delete", dataType: "json",
+                data: {record_ids: IDs},
                 success: function (result) {
                     console.log(result);
                     if (result.data == 1) {
                         alert("删除成功"+IDs);
-                        location.href = "/admin/product/index";
+                        location.href = "/admin/store/index";
                     }
                     else {
                         alert("删除失败");
@@ -250,9 +197,8 @@
                 return false;
             }
         }
-        
+
     })
 </script>
-
 </body>
 </html>

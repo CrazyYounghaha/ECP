@@ -50,11 +50,7 @@ export default class extends Base {
 
 
 	}
-	*storeAction(){
-        yield this.weblogin();
-		this.assign("style","store");
-		return this.display();
-	}
+
 	*addAction(){
         yield this.weblogin();
         var _this = this;
@@ -78,6 +74,12 @@ export default class extends Base {
                 is_onsale:1,
                 cumulative_sales:0,
                 update_time: dateformat('Y-m-d H:i:s',new Date().valueOf())
+            });
+            //插入库存记录
+            yield this.model('add_store_record').add({
+                add_product_id:product_id,
+                add_store_count:productInfo.product_inventory,
+                add_store_time:dateformat('Y-m-d H:i:s',new Date().valueOf())
             });
             //获取图片
             // console.log('post');
@@ -128,8 +130,6 @@ export default class extends Base {
             // return this.success(1);
 
             for(let i = 0;i < product_ids.length;i++){
-
-                yield this.model('product').close_foreign();
                 let product_id = product_ids[i];
                 console.log("delete "+product_id);
                 let model = this.model('product');
@@ -137,26 +137,51 @@ export default class extends Base {
                     yield model.startTrans();//事务处理
                     let product_pics_paths = yield this.model('picture').limit(1).where({product_id:product_id}).field('small_path').select();
                     if(!think.isEmpty(product_pics_paths)) {
+
                         let product_pics_path = product_pics_paths[0].small_path;
                         let product_pics_dir = product_pics_path.substring(0, product_pics_path.lastIndexOf('/'));
                         //删除图片
-                        yield this.deleteFolderRecursive(think.RESOURCE_PATH.replace(new RegExp(/(\\)/g), '/') + product_pics_dir);
-                    }
 
+                        yield this.deleteFolderRecursive(think.RESOURCE_PATH.replace(new RegExp(/(\\)/g), '/') + product_pics_dir);
+                        // console.log(product_pics_dir);
+                    }
+                    // console.log("delete 1st");
                     yield this.model('picture').where({product_id: ['=', product_id]}).delete();
-                    yield model.where({product_id: ['=', product_id]}).delete();
+                    yield model.where({product_id: ['=', product_id]}).update({is_onsale:2});
+                    // yield model.where({product_id: ['=', product_id]}).delete();
                     yield model.commit();
                 }catch(e){
                     yield model.rollback();
                     return this.success(-1);
                 }
-                yield this.model('product').open_foreign();
             }
             return this.success(1);
         }
         return this.success(-1);
     }
-	commentAction(){
+    //显示商品详情
+    *showoneproductAction(){
+        yield this.weblogin();
+        this.assign("style","showoneproduct");
+
+        if(this.isGet('productid')){
+            let product_id = this.get('productid');
+            let product_result = yield this.model('product').limit(1).where({product_id:product_id}).find();
+            console.log(product_result);
+            if(think.isEmpty(product_result)){
+                return this.redirect('/admin/product/index');
+            }
+            let product_type = yield this.model("product_type").select();
+            this.assign("product_typeList",product_type);
+            this.assign("product",product_result);
+            console.log(product_result);
+            return this.display();
+        }
+        return this.redirect('/admin/product/index');
+    }
+
+	*commentAction(){
+        yield this.weblogin();
 		this.assign("style","comment");
 		return this.display();
 	}
