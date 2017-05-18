@@ -70,4 +70,18 @@ export default class extends think.controller.base {
     getPayType(){
         return ['货到付款','支付宝','微信支付'];//顺序很重要
     }
+    //获取商品类型
+    // async getProductType(){
+    //     let data_result = await this.model("product_type").select();
+    //     let return_product_type = {};
+    //     data_result.forEach(function (value, index, array) {
+    //
+    //         let id = value.product_type_id;
+    //         let val = value.tname;
+    //
+    //         return_product_type[id] = val;
+    //         // console.log(id+':'+val+'; '+return_product_type[id]);
+    //     })
+    //     return return_product_type;
+    // }
 }

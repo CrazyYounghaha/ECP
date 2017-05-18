@@ -121,6 +121,7 @@ export default class extends Base {
 		}
 		return this.display();
 	}
+
 	*deleteAction(){
         yield this.weblogin();
         if(this.isAjax()){
@@ -180,10 +181,72 @@ export default class extends Base {
         return this.redirect('/admin/product/index');
     }
 
-	*commentAction(){
+	*getcommentAction(){
         yield this.weblogin();
 		this.assign("style","comment");
-		return this.display();
+		// console.log(result);
+        //返回商品类型列表
+        let product_type = yield this.model("product_type").select();
+        this.assign("product_typeList",product_type);
+        let commentsList;
+        if (this.isPost()) {
+            //获取筛选信息
+            let conditionList = this.post();
+            // console.log(conditionList);
+            //查询条件初始化
+            let conditions = "1=1";
+            //判断是否填入:
+            if(conditionList.startdate != '')
+                conditions += " and date_format(time, '%Y-%m-%d') >= " + "'" +  conditionList.startdate + "'";
+            if(conditionList.enddate != '')
+                conditions += " and date_format(time, '%Y-%m-%d') <= " + "'" + conditionList.enddate + "'";
+            if(conditionList.product_type != -1)
+                conditions += ' and type = '+ conditionList.product_type;
+            if(conditionList.feedback_star != -1)
+                conditions += ' and star_level = '+ conditionList.feedback_star;
+            if(conditionList.keyword != '')
+                conditions += ' and ecp_product.name LIKE '+ "'%" + conditionList.keyword + "%'";
+            commentsList = yield this.model("feedback").join({
+                table: "user",
+                join: "inner",
+                on: ["user_id", "user_id"]
+            }).join({
+                table: "product",
+                join: "inner",
+                on: ["product_id", "product_id"]
+            }).field('ecp_feedback.*,ecp_product.name as product_name,ecp_product.type as pro_type,ecp_user.name as user_name').where(conditions).select();
+        }
+        else {
+            commentsList = yield this.model("feedback").join({
+                table: "user",
+                join: "inner",
+                on: ["user_id", "user_id"]
+            }).join({
+                table: "product",
+                join: "inner",
+                on: ["product_id", "product_id"]
+            }).field('ecp_feedback.*,ecp_product.name as product_name,ecp_product.type as pro_type,ecp_user.name as user_name').select();
+            // console.log(commentsList);
+        }
+        this.assign("commentsList",commentsList);
+        return this.display();
 	}
+	//删除评论
+    *deletecommentAction(){
+        yield this.weblogin();
+        if(this.isAjax()){
+            let feedback_ids_str = this.post('feedback_ids');
+            feedback_ids_str = feedback_ids_str.substring(0,feedback_ids_str.length-1);
+            let feedback_ids = feedback_ids_str.split(',');
+            // return this.success(1);
+            for(let i = 0;i < feedback_ids.length;i++){
+                let feedback_id = feedback_ids[i];
+                console.log("delete "+feedback_id);
+                yield this.model('feedback').where({feedback_id: ['=', feedback_id]}).delete();
+            }
+            return this.success(1);
+        }
+        return this.success(-1);
+    }
 
 }

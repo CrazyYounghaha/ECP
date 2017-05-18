@@ -42,7 +42,7 @@ export default class extends Base {
 		else{
             orderList = yield this.model("order_history").join("ecp_user on ecp_order_history.user_id=ecp_user.user_id").select();
 		}
-        // console.log(orderList);
+        console.log(orderList);
         this.assign('orderList',orderList);
         this.assign('orderStatus',this.getOrderStatus());
         this.assign('payType',this.getPayType());
