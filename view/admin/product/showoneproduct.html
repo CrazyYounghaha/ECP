@@ -1,0 +1,252 @@
+<% include ../static/head.html %>
+<body>
+<% include ../static/topBar.html %>
+
+<div class="am-cf admin-main">
+
+    <% include ../static/leftMenu.html %>
+
+    <div class=" admin-content">
+
+        <div class="daohang">
+            <!--<ul>-->
+                <!--<li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs"> 首页 </button></li>-->
+                <!--<li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">帮助中心<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>-->
+                <!--<li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">奖金管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>-->
+                <!--<li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">产品管理<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>-->
+
+
+            <!--</ul>-->
+
+
+
+
+        </div>
+
+
+
+
+        <div class="admin-biaogelist">
+
+            <div class="listbiaoti am-cf">
+                <ul class="am-icon-flag on"> 栏目名称</ul>
+
+                <dl class="am-icon-home" style="float: right;"> 当前位置： 商品管理 > <a href="/admin/product/add">商品详情</a></dl>
+
+
+
+            </div>
+
+            <div class="fbneirong">
+                <form class="am-form" id="uploadForm" method="post" action="/admin/product/update"  enctype="multipart/form-data">
+                    <div class="am-form-group am-cf">
+                        <div class="zuo">商品名称：</div>
+                        <div class="you">
+                            <input name="product_name" type="text" class="am-input-sm" placeholder="请输入商品名称" value="<%-product.name%>" required>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-cf">
+                        <div class="zuo">商品描述：</div>
+                        <div class="you">
+                            <textarea class="" rows="2" name="product_detail"><%-product.detail%></textarea>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <div class="zuo">商品价格：</div>
+                        <div class="you" style="width: 11%">
+                            <input name="product_price" type="number" step="0.01" class="am-input-sm" value="<%-product.price%>" placeholder="请输入商品价格" required="required">
+                        </div>
+                        <div class="zuo">商品库存：</div>
+                        <div class="you" style="width: 11%">
+                            <input name="product_inventory" type="number" step="1" class="am-input-sm" value="<%-product.inventory%>" placeholder="请输入商品库存" required="required">
+                        </div>
+                        <div class="zuo">商品类型：</div>
+                        <div class="you" style="z-index: 1024;width: 10%;">
+                            <select name="product_type" value="<%-product.type%>" data-am-selected="{btnWidth: 105, btnSize: 'md', btnStyle: 'default'}">
+
+                                <%product_typeList.forEach(function(product_type){%>
+                                    <%if(product.type === product_type.product_type_id){%>
+                                    <option selected value=<%-product_type.product_type_id%>><%-product_type.tname%></option>
+                                    <%}else{%>
+                                    <option value=<%-product_type.product_type_id%>><%-product_type.tname%></option>
+                                    <%}%>
+
+                                <%})%>
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="am-form-group am-cf">-->
+                        <!--<div class="zuo">缩略图：</div>-->
+                        <!--<div class="you"><input type="file" id="doc-ipt-file-1"> </div>-->
+                    <!--</div>-->
+
+                    <!--<div class="am-form-group am-cf">-->
+                        <!--<div class="zuo">产品图片：</div>-->
+                        <!--<div class="you" style="height: 45px;">-->
+                            <!--<input type="file" id="doc-ipt-file-1" name="product_pic[]" multiple>-->
+                            <!--<p class="am-form-help">请选择要上传的文件...</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="am-form-group am-cf">
+                        <div class="zuo">产品图片：</div>
+                        <div class="you">
+                            <div class="upload_box">
+                                <div class="upload_main">
+                                    <div class="upload_choose">
+                                        <input id="fileImage" type="file" size="30" name="fileselect[]" multiple />
+                                        <!--<span id="fileDragArea" class="upload_drag_area">或者将图片拖到此处</span>-->
+                                    </div>
+                                    <div id="preview" class="upload_preview"></div>
+                                </div>
+
+                                <div id="uploadInf" class="upload_inf"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="am-form-group am-cf">
+                        <div class="you" style="margin-left: 58%;">
+                            <button id="btnsubmit_form" type="submit" class="am-btn am-btn-primary am-btn-lg am-radius">保存修改</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+
+            <div class="foods">
+                <ul>
+                    版权所有@2017
+                </ul>
+                <dl>
+                    <a href="" title="返回头部" class="am-icon-btn am-icon-arrow-up"></a>
+                </dl>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="/static/admin/js/amazeui.min.js"></script>
+
+
+<!--<![endif]-->
+<script src="/static/admin/js/zxxFile.js"></script>
+
+
+<script>
+    var params = {
+        fileInput: $("#fileImage").get(0),
+        dragDrop: $("#fileDragArea").get(0),
+        upButton: $("#fileSubmit").get(0),
+        url: $("#uploadForm").attr("action"),
+        filter: function(files) {
+            var arrFiles = [];
+            for (var i = 0, file; file = files[i]; i++) {
+                if (file.type.indexOf("image") == 0) {
+                    if (file.size >= 2048000) {
+                        alert('您这张"'+ file.name +'"图片大小过大，应小于2MB');
+                    } else {
+                        arrFiles.push(file);
+                    }
+                } else {
+                    alert('文件"' + file.name + '"不是图片。');
+                }
+            }
+            return arrFiles;
+        },
+        onSelect: function(files) {
+            var html = '', i = 0;
+            $("#preview").html('<div class="upload_loading"></div>');
+            var funAppendImage = function() {
+                file = files[i];
+                if (file) {
+                    var reader = new FileReader()
+                    reader.onload = function(e) {
+                        html = html + '<div id="uploadList_'+ i +'" class="upload_append_list"><p><strong>' + file.name + '</strong>'+
+                            '<a href="javascript:" class="upload_delete" title="删除" data-index="'+ i +'"></a><br />' +
+                            '<img id="uploadImage_' + i + '" src="' + e.target.result + '" class="upload_image" /></p>'+
+                            '<span id="uploadProgress_' + i + '" class="upload_progress"></span>' +
+                            '</div>';
+
+                        i++;
+                        funAppendImage();
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    $("#preview").html(html);
+                    if (html) {
+                        //删除方法
+                        $(".upload_delete").click(function() {
+                            ZXXFILE.funDeleteFile(files[parseInt($(this).attr("data-index"))]);
+                            return false;
+                        });
+                        //提交按钮显示
+                        $("#fileSubmit").show();
+                    } else {
+                        //提交按钮隐藏
+                        $("#fileSubmit").hide();
+                    }
+                }
+            };
+            funAppendImage();
+        },
+        onDelete: function(file) {
+            $("#uploadList_" + file.index).fadeOut();
+        },
+        onDragOver: function() {
+            $(this).addClass("upload_drag_hover");
+        },
+        onDragLeave: function() {
+            $(this).removeClass("upload_drag_hover");
+        },
+        onProgress: function(file, loaded, total) {
+            var eleProgress = $("#uploadProgress_" + file.index), percent = (loaded / total * 100).toFixed(2) + '%';
+            eleProgress.show().html(percent);
+        },
+        onSuccess: function(file, response) {
+            $("#uploadInf").append("<p>上传成功，图片地址是：" + response + "</p>");
+        },
+        onFailure: function(file) {
+            $("#uploadInf").append("<p>图片" + file.name + "上传失败！</p>");
+            $("#uploadImage_" + file.index).css("opacity", 0.2);
+        },
+        onComplete: function() {
+            //提交按钮隐藏
+            $("#fileSubmit").hide();
+            //file控件value置空
+            $("#fileImage").val("");
+            $("#uploadInf").append("<p>当前图片全部上传完毕，可继续添加上传。</p>");
+        }
+    };
+    ZXXFILE = $.extend(ZXXFILE, params);
+    ZXXFILE.init();
+
+
+</script>
+
+
+<script>
+    //此处蒙混过关
+    $(function () {
+        $('#uploadForm').submit(function () {
+            alert("更新成功")
+        })
+    })
+</script>
+</body>
+</html>
