@@ -37,12 +37,12 @@ export default class extends Base {
                 conditions += ' and status = '+ conditionList.order_status;
             if(conditionList.keyword_buyer != '')
                 conditions += ' and name LIKE '+ "'%" + conditionList.keyword_buyer + "%'";
-            orderList = yield this.model("order").join("ecp_user on ecp_order.user_id=ecp_user.user_id").where(conditions).select();
+            orderList = yield this.model("order_history").join("ecp_user on ecp_order.user_id=ecp_user.user_id").where(conditions).select();
 		}
 		else{
-            orderList = yield this.model("order").join("ecp_user on ecp_order.user_id=ecp_user.user_id").select();
+            orderList = yield this.model("order_history").join("ecp_user on ecp_order_history.user_id=ecp_user.user_id").select();
 		}
-        // console.log(orderList);
+        console.log(orderList);
         this.assign('orderList',orderList);
         this.assign('orderStatus',this.getOrderStatus());
         this.assign('payType',this.getPayType());
@@ -76,5 +76,58 @@ export default class extends Base {
         }
 
         return this.display();
+    }
+    *showoneorderAction(){
+        yield this.weblogin();
+        this.assign("style","showoneorder");
+        if(this.isGet('order_history_id')) {
+            let order_id = this.get('order_history_id');
+            let order_result = yield this.model('order_history_detail').join({
+                table: "order_history",
+                join: "left",
+                on: ["order_history_id", "order_history_id"]
+            }).join({
+                table: "product",
+                join: "left",
+                on: ["product_id","product_id"]
+            }).where({"ecp_order_history.order_history_id": order_id}).select();
+            // console.log(order_result);
+            let user_id = order_result[0].user_id;
+            let address_result = yield this.model('address').where({user_id: user_id}).find();
+            if (think.isEmpty(order_result)) {
+                return this.redirect('/admin/order/index');
+            }
+            this.assign("orderDetail",order_result);
+            this.assign('payType',this.getPayType());
+            this.assign('addressInfo',address_result);
+            return this.display();
+        }
+        return this.redirect('/admin/order/index');
+    }
+    *updateorderstatusAction(){
+        yield this.weblogin();
+        if(this.isAjax()){
+            let cur_order_id = this.post('cur_order_id');//所操作的订单id
+            let update_order_action_id = this.post('update_order_action_id');//修改操作类型
+            if(!think.isEmpty(cur_order_id)　&&  update_order_action_id !== -1){
+                console.log(update_order_action_id);
+                if(update_order_action_id == 0){//取消订单
+                    yield this.model('order_history').where({order_history_id: cur_order_id}).update({status:0});
+                    return this.success(1);
+                }
+                else if(update_order_action_id == 1){//发货完成
+                    yield this.model('order_history').where({order_history_id: cur_order_id}).update({status:3});
+                    return this.success(1);
+                }
+                else if(update_order_action_id == 2){//同意退货
+                    yield this.model('order_history').where({order_history_id: cur_order_id}).update({status:7});
+                    return this.success(1);
+                }
+            }
+            // console.log(update_order_action_id);
+
+            return this.success(-1);
+        }
+        return this.redirect('/admin/order/index');
     }
 }

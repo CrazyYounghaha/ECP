@@ -58,12 +58,30 @@ export default class extends think.controller.base {
     async isArray(o){
         return Object.prototype.toString.call(o)=='[object Array]';
     }
+    //商品is_onsale字段对应sql
+    getProductStatus(){
+        return ['下架','上架','失效'];//顺序很重要
+    }
     //订单状态对应sql
     getOrderStatus(){
-        return ['已取消','待付款','待发货','已完成'];
+        return ['已取消','待付款','待发货','已发货','已完成(未评价)','已完成(已评价)','退货中','退款成功'];//顺序很重要
     }
     //支付方式对应sql
     getPayType(){
-        return ['货到付款','支付宝','微信支付'];
+        return ['货到付款','支付宝','微信支付'];//顺序很重要
     }
+    //获取商品类型
+    // async getProductType(){
+    //     let data_result = await this.model("product_type").select();
+    //     let return_product_type = {};
+    //     data_result.forEach(function (value, index, array) {
+    //
+    //         let id = value.product_type_id;
+    //         let val = value.tname;
+    //
+    //         return_product_type[id] = val;
+    //         // console.log(id+':'+val+'; '+return_product_type[id]);
+    //     })
+    //     return return_product_type;
+    // }
 }

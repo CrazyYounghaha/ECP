@@ -50,11 +50,7 @@ export default class extends Base {
 
 
 	}
-	*storeAction(){
-        yield this.weblogin();
-		this.assign("style","store");
-		return this.display();
-	}
+
 	*addAction(){
         yield this.weblogin();
         var _this = this;
@@ -78,6 +74,12 @@ export default class extends Base {
                 is_onsale:1,
                 cumulative_sales:0,
                 update_time: dateformat('Y-m-d H:i:s',new Date().valueOf())
+            });
+            //插入库存记录
+            yield this.model('add_store_record').add({
+                add_product_id:product_id,
+                add_store_count:productInfo.product_inventory,
+                add_store_time:dateformat('Y-m-d H:i:s',new Date().valueOf())
             });
             //获取图片
             // console.log('post');
@@ -119,6 +121,7 @@ export default class extends Base {
 		}
 		return this.display();
 	}
+
 	*deleteAction(){
         yield this.weblogin();
         if(this.isAjax()){
@@ -128,8 +131,6 @@ export default class extends Base {
             // return this.success(1);
 
             for(let i = 0;i < product_ids.length;i++){
-
-                yield this.model('product').close_foreign();
                 let product_id = product_ids[i];
                 console.log("delete "+product_id);
                 let model = this.model('product');
@@ -137,28 +138,115 @@ export default class extends Base {
                     yield model.startTrans();//事务处理
                     let product_pics_paths = yield this.model('picture').limit(1).where({product_id:product_id}).field('small_path').select();
                     if(!think.isEmpty(product_pics_paths)) {
+
                         let product_pics_path = product_pics_paths[0].small_path;
                         let product_pics_dir = product_pics_path.substring(0, product_pics_path.lastIndexOf('/'));
                         //删除图片
-                        yield this.deleteFolderRecursive(think.RESOURCE_PATH.replace(new RegExp(/(\\)/g), '/') + product_pics_dir);
-                    }
 
+                        yield this.deleteFolderRecursive(think.RESOURCE_PATH.replace(new RegExp(/(\\)/g), '/') + product_pics_dir);
+                        // console.log(product_pics_dir);
+                    }
+                    // console.log("delete 1st");
                     yield this.model('picture').where({product_id: ['=', product_id]}).delete();
-                    yield model.where({product_id: ['=', product_id]}).delete();
+                    yield model.where({product_id: ['=', product_id]}).update({is_onsale:2});
+                    // yield model.where({product_id: ['=', product_id]}).delete();
                     yield model.commit();
                 }catch(e){
                     yield model.rollback();
                     return this.success(-1);
                 }
-                yield this.model('product').open_foreign();
             }
             return this.success(1);
         }
         return this.success(-1);
     }
-	commentAction(){
+    //显示商品详情
+    *showoneproductAction(){
+        yield this.weblogin();
+        this.assign("style","showoneproduct");
+
+        if(this.isGet('productid')){
+            let product_id = this.get('productid');
+            let product_result = yield this.model('product').limit(1).where({product_id:product_id}).find();
+            console.log(product_result);
+            if(think.isEmpty(product_result)){
+                return this.redirect('/admin/product/index');
+            }
+            let product_type = yield this.model("product_type").select();
+            this.assign("product_typeList",product_type);
+            this.assign("product",product_result);
+            console.log(product_result);
+            return this.display();
+        }
+        return this.redirect('/admin/product/index');
+    }
+
+	*getcommentAction(){
+        yield this.weblogin();
 		this.assign("style","comment");
-		return this.display();
+		// console.log(result);
+        //返回商品类型列表
+        let product_type = yield this.model("product_type").select();
+        this.assign("product_typeList",product_type);
+        let commentsList;
+        if (this.isPost()) {
+            //获取筛选信息
+            let conditionList = this.post();
+            // console.log(conditionList);
+            //查询条件初始化
+            let conditions = "1=1";
+            //判断是否填入:
+            if(conditionList.startdate != '')
+                conditions += " and date_format(time, '%Y-%m-%d') >= " + "'" +  conditionList.startdate + "'";
+            if(conditionList.enddate != '')
+                conditions += " and date_format(time, '%Y-%m-%d') <= " + "'" + conditionList.enddate + "'";
+            if(conditionList.product_type != -1)
+                conditions += ' and type = '+ conditionList.product_type;
+            if(conditionList.feedback_star != -1)
+                conditions += ' and star_level = '+ conditionList.feedback_star;
+            if(conditionList.keyword != '')
+                conditions += ' and ecp_product.name LIKE '+ "'%" + conditionList.keyword + "%'";
+            commentsList = yield this.model("feedback").join({
+                table: "user",
+                join: "inner",
+                on: ["user_id", "user_id"]
+            }).join({
+                table: "product",
+                join: "inner",
+                on: ["product_id", "product_id"]
+            }).field('ecp_feedback.*,ecp_product.name as product_name,ecp_product.type as pro_type,ecp_user.name as user_name').where(conditions).select();
+        }
+        else {
+            commentsList = yield this.model("feedback").join({
+                table: "user",
+                join: "inner",
+                on: ["user_id", "user_id"]
+            }).join({
+                table: "product",
+                join: "inner",
+                on: ["product_id", "product_id"]
+            }).field('ecp_feedback.*,ecp_product.name as product_name,ecp_product.type as pro_type,ecp_user.name as user_name').select();
+            // console.log(commentsList);
+        }
+        this.assign("commentsList",commentsList);
+        return this.display();
 	}
+	//删除评论
+    *deletecommentAction(){
+        yield this.weblogin();
+        if(this.isAjax()){
+            let feedback_ids_str = this.post('feedback_ids');
+            feedback_ids_str = feedback_ids_str.substring(0,feedback_ids_str.length-1);
+            let feedback_ids = feedback_ids_str.split(',');
+            // return this.success(1);
+            for(let i = 0;i < feedback_ids.length;i++){
+                let feedback_id = feedback_ids[i];
+                console.log("delete "+feedback_id);
+                yield this.model('feedback').where({feedback_id: ['=', feedback_id]}).delete();
+            }
+            return this.success(1);
+        }
+        return this.success(-1);
+    }
 
 }
