@@ -18,7 +18,6 @@ function change(v){
 		str+=("_"+(document.getElementById(s[i]).selectedIndex-1));
 	}
 	var ss=document.getElementById(s[v]);
-	console.log(ss);
 	with(ss){
 		length = 0;
 		options[0]=new Option(opt0[v],opt0[v]);//添加了一个option后length+1，length动态增加

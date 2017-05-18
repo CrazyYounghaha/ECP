@@ -8,13 +8,28 @@ export default class extends Base {
    * @return {Promise} []
    */
   *indexAction(){
-    //auto render template file index/index.html
-    this.assign("style", "index");
-    let islogin = yield this.is_adminlogin();
-    if(!islogin)
-        return this.redirect("/admin/index/login");
-    else
-        return this.display();
+      //auto render template file index/index.html
+      this.assign("style", "index");
+      yield this.weblogin();
+      let return_result = {};
+      //用户数量
+      let user_count = yield this.model('user').count();
+      user_count = think.isEmpty(user_count)?0:user_count;
+      return_result.user_count = user_count;
+      //商品数量
+      let product_count = yield this.model('product').count();
+      product_count = think.isEmpty(product_count)?0:product_count;
+      return_result.product_count = product_count;
+      //当天收入
+      let today_income = yield this.model('order_history').where("(status = 4 OR status = 5) AND date_format(pay_time, '%Y-%m-%d') = "+ "'" + dateformat('Y-m-d',new Date().valueOf()) + "'").sum('order_pay');
+      today_income = think.isEmpty(today_income)?0:today_income;
+      return_result.today_income = today_income;
+      //总收入
+      let total_income = yield this.model('order_history').where('status = 4 OR status =5').sum('order_pay');
+      total_income = think.isEmpty(total_income)?0:total_income;
+      return_result.total_income = total_income;
+      this.assign('ecp_data',return_result);
+      return this.display();
   }
   *loginAction() {
       if (this.isPost()) {
