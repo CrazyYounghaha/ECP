@@ -1,16 +1,19 @@
 <div class="nav-navicon admin-main admin-sidebar">
+    <!--改样式-->
+    <% if(controller.isadminlogin) { %>
+    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;">当前管理员：<%- controller.admin.admin_name -%></div>
+    <% } else { %>
+    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;" onclick="window.open('/admin/index/login','_self')"> 点击登录</div>
+    <% } %>
 
 
-    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;"> 欢迎系统管理员：</div>
     <div class="sideMenu">
         <h3 class="am-icon-flag"><em></em> <a href="#">商品管理</a></h3>
         <ul>
             <li><a href="/admin/product/index">商品列表</a></li>
             <li><a href="/admin/product/add">添加新商品</a></li>
-            <li>商品分类</li>
-            <li><a href="/admin/product/comment">用户评论</a></li>
+            <li><a href="/admin/product/getcomment">用户评论</a></li>
             <!--<li>商品回收站</li>-->
-            <li><a href="/admin/product/store">库存管理</a></li>
         </ul>
         <% if (style == "order") { %>
         <h3 class="am-icon-cart-plus on"><em></em> <a href="#"> 订单管理</a></h3>
@@ -19,11 +22,15 @@
         <% } %>
         <ul>
             <li><a href="/admin/order/index">订单列表</a></li>
-            <!--<li>合并订单</li>-->
-            <!--<li>订单打印</li>-->
-            <li>添加订单</li>
-            <!--<li>发货单列表</li>-->
-            <!--<li>换货单列表</li>-->
+        </ul>
+        <% if (style == "store") { %>
+        <h3 class="am-icon-cart-plus on"><em></em> <a href="#"> 库存管理</a></h3>
+        <% } else { %>
+        <h3 class="am-icon-cart-plus"><em></em> <a href="#"> 库存管理</a></h3>
+        <% } %>
+        <ul>
+            <li><a href="/admin/store/index">进货记录</a></li>
+            <li><a href="/admin/store/totaladdstore">库存统计</a></li>
         </ul>
         <% if (style == "vip") { %>
         <h3 class="am-icon-users on"><em></em> <a href="#">会员管理</a></h3>
@@ -56,11 +63,6 @@
             <li>提现 /转账 出入账汇率</li>
             <li>平台设置</li>
             <!--<li>声音文件</li>-->
-        </ul>
-        <h3 class="am-icon-gears"><em></em><a href="#">管理员管理</a></h3>
-        <ul>
-            <li><a href="/admin/privilege/addAdmin">添加管理员</a></li>
-            <li><a href="/admin/privilege/listAdmin" >管理员列表</a></li>
         </ul>
     </div>
     <!-- sideMenu End -->

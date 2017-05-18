@@ -7,9 +7,9 @@
 <!--悬浮搜索框-->
 
 <div class="nav white">
-    <div class="logo"><img src="/static/shop/images/logo.png" /></div>
+    <div class="logo"><img src="/static/shop/images/logo.png"/></div>
     <div class="logoBig">
-        <li><img src="/static/shop/images/logobig.png" /></li>
+        <li><img src="/static/shop/images/logobig.png"/></li>
     </div>
 
     <div class="search-bar pr">
@@ -32,82 +32,87 @@
             </div>
             <div class="clear"></div>
             <ul>
-                <!--<div class="per-border"></div>-->
-                <!--<li class="user-addresslist defaultAddr">-->
+                <% for ( var index1 in address ) { %>
+                <% if (index1 == 0 ) { %>
+                <div class="per-border"></div>
+                <li class="user-addresslist defaultAddr">
+                    <div class="address-left">
+                        <div class="user DefaultAddr">
+                            <span class="buy-address-detail">
+                                <span class="hidden"><%- address[index1].address_id -%> </span>
+                                <span class="buy-user"><%- address[index1].receiver_name -%> </span>
+                                <span class="buy-phone"><%- address[index1].phone -%></span>
+                            </span>
+                        </div>
+                        <div class="default-address DefaultAddr">
+                            <span class="buy-line-title buy-line-title-type">收货地址：</span>
+                            <span class="buy--address-detail">
+								   <span class="province"><%- address[index1].province -%></span>
+										<span class="city"><%- address[index1].city -%></span>
+										<span class="dist"><%- address[index1].town -%></span>
+										<span class="street"><%- address[index1].full_address -%></span>
+										</span>
 
-                    <!--<div class="address-left">-->
-                        <!--<div class="user DefaultAddr">-->
+                            </span>
+                        </div>
+                        <ins class="deftip">默认地址</ins>
+                    </div>
+                    <div class="address-right">
+                        <a href="#">
+                            <span class="am-icon-angle-right am-icon-lg"></span></a>
+                    </div>
+                    <div class="clear"></div>
 
-										<!--<span class="buy-address-detail">-->
-                   <!--<span class="buy-user">艾迪 </span>-->
-										<!--<span class="buy-phone">15888888888</span>-->
-										<!--</span>-->
-                        <!--</div>-->
-                        <!--<div class="default-address DefaultAddr">-->
-                            <!--<span class="buy-line-title buy-line-title-type">收货地址：</span>-->
-                            <!--<span class="buy&#45;&#45;address-detail">-->
-								   <!--<span class="province">湖北</span>省-->
-										<!--<span class="city">武汉</span>市-->
-										<!--<span class="dist">洪山</span>区-->
-										<!--<span class="street">雄楚大道666号(中南财经政法大学)</span>-->
-										<!--</span>-->
+                    <div class="new-addr-btn">
+                        <a href="#" class="hidden">设为默认</a>
+                        <span class="new-addr-bar hidden">|</span>
+                        <a href="#">编辑</a>
+                        <span class="new-addr-bar">|</span>
+                        <a href="javascript:void(0);" onclick="">删除</a>
+                    </div>
 
-                            <!--</span>-->
-                        <!--</div>-->
-                        <!--<ins class="deftip">默认地址</ins>-->
-                    <!--</div>-->
-                    <!--<div class="address-right">-->
-                        <!--<a href="../person/address.html">-->
-                            <!--<span class="am-icon-angle-right am-icon-lg"></span></a>-->
-                    <!--</div>-->
-                    <!--<div class="clear"></div>-->
+                </li>
+                <% } else { %>
+                <!--非默认地址-->
+                <div class="per-border"></div>
+                <li class="user-addresslist">
+                    <div class="address-left">
+                        <div class="user DefaultAddr">
+                            <span class="buy-address-detail">
+                                <span class="hidden"><%- address[index1].address_id -%> </span>
+                                <span class="buy-user"><%- address[index1].receiver_name -%></span>
+								<span class="buy-phone"><%- address[index1].phone -%></span>
+                            </span>
+                        </div>
+                        <div class="default-address DefaultAddr">
+                            <span class="buy-line-title buy-line-title-type">收货地址：</span>
+                            <span class="buy--address-detail">
+								   <span class="province"><%- address[index1].province -%></span>
+										<span class="city"><%- address[index1].city -%></span>
+										<span class="dist"><%- address[index1].town -%></span>
+										<span class="street"><%- address[index1].full_address -%></span>
+										</span>
 
-                    <!--<div class="new-addr-btn">-->
-                        <!--<a href="#" class="hidden">设为默认</a>-->
-                        <!--<span class="new-addr-bar hidden">|</span>-->
-                        <!--<a href="#">编辑</a>-->
-                        <!--<span class="new-addr-bar">|</span>-->
-                        <!--<a href="javascript:void(0);" onclick="">删除</a>-->
-                    <!--</div>-->
+                            </span>
+                        </div>
+                        <ins class="deftip hidden">默认地址</ins>
+                    </div>
+                    <div class="address-right">
+                        <span class="am-icon-angle-right am-icon-lg"></span>
+                    </div>
+                    <div class="clear"></div>
 
-                <!--</li>-->
-                <!--<div class="per-border"></div>-->
-                <!--<li class="user-addresslist">-->
-                    <!--<div class="address-left">-->
-                        <!--<div class="user DefaultAddr">-->
+                    <div class="new-addr-btn">
+                        <a href="#">设为默认</a>
+                        <span class="new-addr-bar">|</span>
+                        <a href="#">编辑</a>
+                        <span class="new-addr-bar">|</span>
+                        <a href="javascript:void(0);" onclick="">删除</a>
+                    </div>
 
-										<!--<span class="buy-address-detail">-->
-                   <!--<span class="buy-user">艾迪 </span>-->
-										<!--<span class="buy-phone">15877777777</span>-->
-										<!--</span>-->
-                        <!--</div>-->
-                        <!--<div class="default-address DefaultAddr">-->
-                            <!--<span class="buy-line-title buy-line-title-type">收货地址：</span>-->
-                            <!--<span class="buy&#45;&#45;address-detail">-->
-								   <!--<span class="province">湖北</span>省-->
-										<!--<span class="city">武汉</span>市-->
-										<!--<span class="dist">武昌</span>区-->
-										<!--<span class="street">东湖路75号众环大厦9栋9层999</span>-->
-										<!--</span>-->
-
-                            <!--</span>-->
-                        <!--</div>-->
-                        <!--<ins class="deftip hidden">默认地址</ins>-->
-                    <!--</div>-->
-                    <!--<div class="address-right">-->
-                        <!--<span class="am-icon-angle-right am-icon-lg"></span>-->
-                    <!--</div>-->
-                    <!--<div class="clear"></div>-->
-
-                    <!--<div class="new-addr-btn">-->
-                        <!--<a href="#">设为默认</a>-->
-                        <!--<span class="new-addr-bar">|</span>-->
-                        <!--<a href="#">编辑</a>-->
-                        <!--<span class="new-addr-bar">|</span>-->
-                        <!--<a href="javascript:void(0);"  onclick="">删除</a>-->
-                    <!--</div>-->
-
-                <!--</li>-->
+                </li>
+                <% } %>
+                <% } %>
 
             </ul>
 
@@ -117,11 +122,21 @@
         <div class="logistics">
             <h3>选择物流方式</h3>
             <ul class="op_express_delivery_hot">
-                <li data-value="yuantong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -468px"></i>圆通<span></span></li>
-                <li data-value="shentong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -1008px"></i>申通<span></span></li>
-                <li data-value="yunda" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -576px"></i>韵达<span></span></li>
-                <li data-value="zhongtong" class="OP_LOG_BTN op_express_delivery_hot_last "><i class="c-gap-right" style="background-position:0px -324px"></i>中通<span></span></li>
-                <li data-value="shunfeng" class="OP_LOG_BTN  op_express_delivery_hot_bottom"><i class="c-gap-right" style="background-position:0px -180px"></i>顺丰<span></span></li>
+                <li data-value="yuantong" class="OP_LOG_BTN  "><i class="c-gap-right"
+                                                                  style="background-position:0px -468px"></i>圆通<span></span>
+                </li>
+                <li data-value="shentong" class="OP_LOG_BTN  "><i class="c-gap-right"
+                                                                  style="background-position:0px -1008px"></i>申通<span></span>
+                </li>
+                <li data-value="yunda" class="OP_LOG_BTN  "><i class="c-gap-right"
+                                                               style="background-position:0px -576px"></i>韵达<span></span>
+                </li>
+                <li data-value="zhongtong" class="OP_LOG_BTN op_express_delivery_hot_last "><i class="c-gap-right"
+                                                                                               style="background-position:0px -324px"></i>中通<span></span>
+                </li>
+                <li data-value="shunfeng" class="OP_LOG_BTN  op_express_delivery_hot_bottom"><i class="c-gap-right"
+                                                                                                style="background-position:0px -180px"></i>顺丰<span></span>
+                </li>
             </ul>
         </div>
         <div class="clear"></div>
@@ -130,9 +145,9 @@
         <div class="logistics">
             <h3>选择支付方式</h3>
             <ul class="pay-list">
-                <li class="pay card"><img src="/static/shop/images/wangyin.jpg" />银联<span></span></li>
-                <li class="pay qq"><img src="/static/shop/images/weizhifu.jpg" />微信<span></span></li>
-                <li class="pay taobao"><img src="/static/shop/images/zhifubao.jpg" />支付宝<span></span></li>
+                <li class="pay card"><img src="/static/shop/images/wangyin.jpg"/>银联<span></span></li>
+                <li class="pay qq"><img src="/static/shop/images/weizhifu.jpg"/>微信<span></span></li>
+                <li class="pay taobao"><img src="/static/shop/images/zhifubao.jpg"/>支付宝<span></span></li>
             </ul>
         </div>
         <div class="clear"></div>
@@ -176,11 +191,13 @@
                                 <li class="td td-item">
                                     <div class="item-pic">
                                         <a href="#" class="J_MakePoint">
-                                            <img src="<%- orderDetail[index].cart_picture -%>" class="itempic J_ItemImg"></a>
+                                            <img src="<%- orderDetail[index].cart_picture -%>"
+                                                 class="itempic J_ItemImg"></a>
                                     </div>
                                     <div class="item-info">
                                         <div class="item-basic-info">
-                                            <a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11"><%- orderDetail[index].name -%></a>
+                                            <a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11"><%-
+                                                orderDetail[index].name -%></a>
                                         </div>
                                     </div>
                                 </li>
@@ -193,7 +210,8 @@
                                 <li class="td td-price">
                                     <div class="item-price price-promo-promo">
                                         <div class="price-content">
-                                            <em class="J_Price price-now"><%- orderDetail[index].price -%></em><span>¥</span>
+                                            <em class="J_Price price-now"><%- orderDetail[index].price
+                                                -%></em><span>¥</span>
                                         </div>
                                     </div>
                                 </li>
@@ -204,7 +222,9 @@
                                         <span class="phone-title">购买数量</span>
                                         <div class="sl">
                                             <!--<input class="min am-btn" name="" type="button" value="-" />-->
-                                            <input class="text_box" name="" type="text" value="<%- orderDetail[index].count -%>" style="width:30px;" disabled/>
+                                            <input class="text_box" name="" type="text"
+                                                   value="<%- orderDetail[index].count -%>" style="width:30px;"
+                                                   disabled/>
                                             <!--<input class="add am-btn" name="" type="button" value="+" />-->
                                         </div>
                                     </div>
@@ -212,7 +232,8 @@
                             </li>
                             <li class="td td-sum">
                                 <div class="td-inner">
-                                    <em tabindex="0" class="J_ItemSum number"><%- orderDetail[index].count * orderDetail[index].price -%></em><span>¥</span>
+                                    <em tabindex="0" class="J_ItemSum number"><%- orderDetail[index].count *
+                                        orderDetail[index].price -%></em><span>¥</span>
                                 </div>
                             </li>
                             <li class="td td-oplist">
@@ -239,7 +260,8 @@
                 <div class="order-user-info">
                     <div id="holyshit257" class="memo">
                         <label>买家留言：</label>
-                        <input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+                        <input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明"
+                               class="memo-input J_MakePoint c2c-text-default memo-close">
                         <div class="msg hidden J-msg">
                             <p class="error">最多输入500个字符</p>
                         </div>
@@ -272,27 +294,28 @@
 
                         <p class="buy-footer-address">
                             <span class="buy-line-title buy-line-title-type">寄送至：</span>
-                            <span class="buy--address-detail">
-								   <span class="province">湖北</span>省
-												<span class="city">武汉</span>市
-												<span class="dist">洪山</span>区
-												<span class="street">雄楚大道666号(中南财经政法大学)</span>
-												</span>
+                            <span class="buy--address-detail" id="confirmAddress">
+                                    <span class="province"><%- address[0].province -%></span>
+                                    <span class="city"><%- address[0].city -%></span>
+                                    <span class="dist"><%- address[0].town -%></span>
+                                    <span class="street"><%- address[0].full_address -%></span>
+                                </span>
                             </span>
                         </p>
                         <p class="buy-footer-address">
                             <span class="buy-line-title">收货人：</span>
-                            <span class="buy-address-detail">
-                                         <span class="buy-user"><%- controller.user.username -%></span>
-												<span class="buy-phone"><%- controller.user.phone -%></span>
-												</span>
+                            <span class="buy-address-detail" id="confirmPerson">
+                                <span class="hidden"><%- address[0].address_id -%></span>
+                                <span class="buy-user"><%- address[0].receiver_name -%></span>
+								<span class="buy-phone"><%- address[0].phone -%></span>
+                            </span>
                         </p>
                     </div>
                 </div>
 
                 <div id="holyshit269" class="submitOrder">
                     <div class="go-btn-wrap">
-                        <a id="J_Go" href="success.html" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+                        <a id="J_Go"  class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -310,56 +333,49 @@
 
     <!--标题 -->
     <div class="am-cf am-padding">
-        <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">新增地址</strong> / <small>Add address</small></div>
+        <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">新增地址</strong> /
+            <small>Add address</small>
+        </div>
     </div>
     <hr/>
 
     <div class="am-u-md-12">
-        <form class="am-form am-form-horizontal">
+        <form class="am-form am-form-horizontal" id="addAddress">
 
             <div class="am-form-group">
                 <label for="user-name" class="am-form-label">收货人</label>
                 <div class="am-form-content">
-                    <input type="text" id="user-name" placeholder="收货人">
+                    <input type="text" name="receive" id="user-name" placeholder="收货人">
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="user-phone" class="am-form-label">手机号码</label>
                 <div class="am-form-content">
-                    <input id="user-phone" placeholder="手机号必填" type="email">
+                    <input id="user-phone" name="phone" placeholder="手机号必填" type="tel">
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="user-phone" class="am-form-label">所在地</label>
                 <div class="am-form-content address">
-                    <select data-am-selected>
-                        <option value="a">浙江省</option>
-                        <option value="b">湖北省</option>
-                    </select>
-                    <select data-am-selected>
-                        <option value="a">温州市</option>
-                        <option value="b">武汉市</option>
-                    </select>
-                    <select data-am-selected>
-                        <option value="a">瑞安区</option>
-                        <option value="b">洪山区</option>
-                    </select>
+                    <select id="province" name="province"></select>
+                    <select id="city" name="city"></select>
+                    <select id="town" name="town"></select>
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="user-intro" class="am-form-label">详细地址</label>
                 <div class="am-form-content">
-                    <textarea class="" rows="3" id="user-intro" placeholder="输入详细地址"></textarea>
+                    <textarea class="" rows="3" id="user-intro" name="full_address" placeholder="输入详细地址"></textarea>
                     <small>100字以内写出你的详细地址...</small>
                 </div>
             </div>
 
             <div class="am-form-group theme-poptit">
                 <div class="am-u-sm-9 am-u-sm-push-3">
-                    <div class="am-btn am-btn-danger">保存</div>
+                    <div class="am-btn am-btn-danger" id="savePlace">保存</div>
                     <div class="am-btn am-btn-danger close">取消</div>
                 </div>
             </div>
@@ -370,5 +386,78 @@
 
 <div class="clear"></div>
 </body>
+<script type="text/javascript" src="/static/shop/js/area.js"></script>
+<script>
+	$('#savePlace').click(function () {
+//	    _toastr("click?","top-right","error",false);
+		var user_name = document.getElementById('user-name').value;
+		var user_phone = document.getElementById('user-phone').value;
+		var user_intro = document.getElementById('user-intro').value;
+		if (user_name == "" || user_phone == "" || user_intro == "") _toastr("不能为空！老铁", "top-right", "error", false);
+		var data = $('#addAddress').serialize();
+
+		$.ajax({
+			url: "/user/cart/addressadd",
+			type: "post",
+			data: data,
+			success: function (msg) {
+//    			console.log(msg);
+				switch (msg.data) {
+					case -1:
+						_toastr("已经存在一样的地址了！老铁", "top-right", "info", false);
+						break;
+					case 1:
+						location.reload(true);
+						break;
+				}
+			}
+		})
+	});
+
+	$("#user-phone").blur(function () {
+		var phone = this.value;
+		var RegCellPhone = /^(1)([0-9]{10})?$/;
+		var flag = phone.search(RegCellPhone);
+		if (flag == -1) {
+			_toastr("手机号不合法！", "top-right", "error", false);
+			this.focus();
+		}
+	});
+
+	$(".user-addresslist").click(function () {
+//    	_toastr("check","top-right","info",false);
+
+		let details1 = $(this)[0].getElementsByClassName('buy--address-detail')[0].children;//获取所选地址的内容
+		let address = document.getElementById("confirmAddress").children;
+		for (let i = 0; i < 4; i++) {
+			address[i].innerHTML = details1[i].innerHTML;
+		}
+		let details2 = $(this)[0].getElementsByClassName('buy-address-detail')[0].children;
+		let personal = document.getElementById('confirmPerson').children;
+		for (let i = 0; i < 3; i++) {
+			personal[i].innerHTML = details2[i].innerHTML;
+		}
+	});
+
+	$('#J_Go').click(function () {
+		let address_id = document.getElementById('confirmPerson').children[0].innerHTML;
+		$.ajax({
+			url: "/user/cart/success",
+            type: "post",
+            data: {address_id: address_id},
+            success: function (msg) {
+              switch(msg.data){
+                case -1:
+                	_toastr("click","top-right","info",false);
+//	                location.href="/cart/success";//get()
+                	break;
+                case 1:
+                	location.href="/cart/success";
+                	break;
+              }
+            }
+        })
+    });
+</script>
 
 </html>

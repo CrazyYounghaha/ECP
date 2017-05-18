@@ -35,9 +35,6 @@ export default class extends Base {
 						join: "left",
 						on: ["shoppingcart_id", "shoppingcart_id"]
 					}).where({user_id: user.user_id}).count();//查找登录用户的购物车中有多少物品；
-					if(shoppingCart == 0){
-						shoppingCart.total = 0;
-					}
 					let userInfo = {
 						'id': user.user_id,
 						'username': data.name,
