@@ -112,11 +112,16 @@ export default class extends Base {
                 //picture表插入操作
                 let pic_id = yield this.model('picture').add({
                     product_id: product_id,
-                    type: product_type,
+                    type: 1,
                     small_path:relPath,
                     mid_path:relPath,
                     big_path:relPath,
                 });
+                let product_pic_id = yield this.model('product').where({product_id: ['=', product_id]}).update({
+                    cart_picture:relPath,
+                    picture:relPath
+                });
+
             }
 		}
 		return this.display();

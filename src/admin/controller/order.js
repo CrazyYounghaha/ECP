@@ -116,11 +116,7 @@ export default class extends Base {
                     return this.success(1);
                 }
                 else if(update_order_action_id == 1){//发货完成
-                    yield this.model('order_history').where({order_history_id: cur_order_id}).update({status:3});
-                    return this.success(1);
-                }
-                else if(update_order_action_id == 2){//同意退货
-                    yield this.model('order_history').where({order_history_id: cur_order_id}).update({status:7});
+                    yield this.model('order_history').where({order_history_id: cur_order_id}).update({status:2});
                     return this.success(1);
                 }
             }

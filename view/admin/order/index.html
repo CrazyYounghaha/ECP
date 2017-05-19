@@ -154,22 +154,17 @@
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button class="am-btn am-btn-default am-btn-xs am-text-success am-round" onclick="window.open('/admin/order/showoneorder?order_history_id=<%-order.order_history_id%>');return false;"><span class="am-icon-search" title="查看订单详情"></span> </button>
-                                    <%if(order.status === 6){%>
-                                    <select class="sel-update-order" title="修改订单状态" name="order_status" data-am-selected="{btnWidth: 12, btnSize: 'sm', btnStyle: 'default',maxHeight:95,dropUp: 1}">
-                                        <option value=-1 selected></option>
-                                        <option value=0>取消订单</option>
-                                        <option value=2>同意退货</option>
-                                    </select>
-                                    <%}else if(order.status === 1 || order.status === 3){%>
+
+                                    <%if(order.status === 1){%>
                                     <select id="sel_order_<%-order.order_history_id%>" class="sel-update-order" title="修改订单状态" name="order_status" data-am-selected="{btnWidth: 12, btnSize: 'sm', btnStyle: 'default',maxHeight:95,dropUp: 1}">
                                         <option value=-1 selected></option>
                                         <option value=0>取消订单</option>
+                                        <option value=1>发货完成</option>
                                     </select>
                                     <%}else if(order.status === 2){%>
                                     <select class="sel-update-order" title="修改订单状态" name="order_status" data-am-selected="{btnWidth: 12, btnSize: 'sm', btnStyle: 'default',maxHeight:95,dropUp: 1}">
                                         <option value=-1 selected></option>
                                         <option value=0>取消订单</option>
-                                        <option value=1>发货完成</option>
                                     </select>
                                     <%}else{%>
                                     <%}%>
