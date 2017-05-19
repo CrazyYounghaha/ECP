@@ -32,7 +32,7 @@
                         <h3>订单信息</h3>
                         <div class="" style="margin:10px auto;width: 100%;max-width: 1000px;min-height:30px;padding: 10px">
                             <label style="font-weight: 100;font-size: 12px;color: #4e4e4e;width: 15%;">订单编号:<%-orderDetail[0].order_history_id%></label>
-                            <label style="font-weight: 100;font-size: 12px;color: #4e4e4e;width: 25%;">下单时间:<%-dateformat('Y-m-d H:i:s', orderDetail[0].pay_time)%></label>
+                            <label style="font-weight: 100;font-size: 12px;color: #4e4e4e;width: 25%;">下单时间:<%-dateformat('Y-m-d H:i:s', orderDetail[0].order_time)%></label>
                             <label style="font-weight: 100;font-size: 12px;color: #4e4e4e;width: 30%;">付款时间时间:<%-dateformat('Y-m-d H:i:s', orderDetail[0].pay_time)%></label>
                             <label style="font-weight: 100;font-size: 12px;color: #4e4e4e;width: 20%;">支付方式:<%-payType[orderDetail[0].pay_type]%></label>
                         </div>
