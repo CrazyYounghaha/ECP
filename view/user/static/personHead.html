@@ -5,28 +5,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
 
-    <title>个人中心</title>
+
 
     <link href="/static/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
     <link href="/static/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
     <link href="/static/shop/css/personal.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/plugins/toastr/toastr.css" rel="stylesheet" type="text/css">
     <% if (style == "index") {%>
+    <title>个人中心</title>
     <link href="/static/shop/css/vipstyle.css" rel="stylesheet" type="text/css">
     <% } %>
     <% if (style == "information") {%>
+    <title>个人信息</title>
     <link href="/static/shop/css/infstyle.css" rel="stylesheet" type="text/css">
     <% } %>
     <% if (style == "address") {%>
+    <title>地址管理</title>
     <link href="/static/shop/css/addstyle.css" rel="stylesheet" type="text/css">
     <% } %>
     <% if (style == "comment") {%>
     <link href="/static/shop/css/cmstyle.css" rel="stylesheet" type="text/css">
     <% } %>
     <% if (style == "order") {%>
+    <title>订单管理</title>
     <link href="/static/shop/css/orstyle.css" rel="stylesheet" type="text/css">
     <% } %>
     <% if (style == "express") {%>
+    <title>快递信息</title>
     <link href="/static/shop/css/lostyle.css" rel="stylesheet" type="text/css">
+    <% } %>
+    <% if (style == "commentList") {%>
+    <title>编写评论</title>
+    <link href="/static/shop/css/appstyle.css" rel="stylesheet" type="text/css">
+    <% } %>
+    <% if (style == "chat") {%>
+    <title>客服交流</title>
+    <link href="/static/shop/css/chat.css" rel="stylesheet" type="text/css">
     <% } %>
     <script src="/static/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
     <script src="/static/AmazeUI-2.4.2/assets/js/amazeui.js"></script>

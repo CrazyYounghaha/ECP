@@ -73,7 +73,7 @@
 	                var data = $('#loginForm').serialize();
 	                $.ajax({
 	                	url: "/user/index/login",
-                        method: "post",
+                        type: "post",
                         data: data,
                         success: function (msg){
 	                		console.log(msg);

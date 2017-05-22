@@ -151,10 +151,8 @@
                                                 </div>
                                             </li>
                                             <li class="td td-change">
-                                                <a href="/person/comment">
-                                                    <div class="am-btn am-btn-success am-round">
-                                                        评价商品</div>
-                                                </a>
+                                                <div class="am-btn am-btn-success am-round" onclick="window.open('/person/commentlist?orderId=<%- order_history[index].order_history_id -%>','_self')">评价商品</div>
+                                                <p class="hidden"><%- order_history[index].order_history_id -%></p>
                                             </li>
                                         </div>
                                         <% } %>
@@ -654,10 +652,8 @@
                                                 </div>
                                             </li>
                                             <li class="td td-change">
-                                                <a href="/person/comment">
-                                                    <div class="am-btn am-btn-success am-round">
-                                                        评价商品</div>
-                                                </a>
+                                                <div class="am-btn am-btn-success am-round" onclick="window.open('/person/commentlist?orderId=<%- order_history[index6].order_history_id -%>','_self')">评价商品</div>
+                                                <p class="hidden"><%- order_history[index6].order_history_id -%></p>
                                             </li>
                                         </div>
                                     </div>
@@ -687,6 +683,20 @@
     <li><a href=""><i class="am-icon-shopping-basket"></i>购物车</a></li>
     <li class="active"><a href=""><i class="am-icon-user"></i>我的</a></li>
 </div>
+<script>
+//    $('div.am-btn-success').click(function () {
+//        let order_history_id = $(this)[0].nextElementSibling.innerHTML;
+////        console.log(order_history_id);
+//        $.ajax({
+//            url: "/person/commentlist",
+//            type: "post",
+//            data: {id: order_history_id},
+//            success: function(){
+//                location.href='/person/commentlist';
+//            }
+//        })
+//    });
+</script>
 </body>
 
 </html>

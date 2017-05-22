@@ -111,26 +111,37 @@
             <span class="marqueen-title">商城头条</span>
             <div class="demo">
                 <div class="mod-vip">
+                    <% if ( controller.islogin) { %>
                     <div class="m-baseinfo">
-                        <a href="/static/shop/person/index.html">
+                        <a href="/user/person/index">
                             <img src="/static/shop/images/getAvatar.do.jpg">
                         </a>
                         <em>
-                            Hi,<span class="s-name">小叮当</span>
+                            Hi,<span class="s-name"><%- controller.user.username -%></span>
                             <a href="#"><p>点击更多优惠活动</p></a>
                         </em>
                     </div>
                     <div class="member-logout">
-                        <a class="am-btn-warning btn" href="/index/login">登录</a>
-                        <a class="am-btn-warning btn" href="register.html">注册</a>
-                    </div>
-                    <div class="member-login">
-                        <a href="#"><strong>0</strong>待收货</a>
-                        <a href="#"><strong>0</strong>待发货</a>
-                        <a href="#"><strong>0</strong>待付款</a>
-                        <a href="#"><strong>0</strong>待评价</a>
+                        <a class="am-btn-warning btn" href="/person/index">个人详情</a>
+                        <a class="am-btn-warning btn" href="/person/order">查看订单</a>
                     </div>
                     <div class="clear"></div>
+                    <% } else { %>
+                    <div class="m-baseinfo">
+                        <a href="/user/person/index">
+                            <img src="/static/shop/images/getAvatar.do.jpg">
+                        </a>
+                        <em>
+                            Hi,<span class="s-name">未登录</span>
+                            <!--<a href="#"><p>点击更多优惠活动</p></a>-->
+                        </em>
+                    </div>
+                    <div class="member-logout">
+                        <a class="am-btn-warning btn" href="/index/login">登录</a>
+                        <a class="am-btn-warning btn" href="/index/register">注册</a>
+                    </div>
+                    <div class="clear"></div>
+                    <% } %>
                 </div>
                 <ul>
                     <li class="title-first"><a target="_blank" href="#">
