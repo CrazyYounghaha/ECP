@@ -88,7 +88,7 @@
 
                         <td class="am-hide-sm-only"><%-comment.feedback_detail%></td>
                         <td><%-comment.user_name%></td>
-                        <td><a href="/admin/order/showoneorder?order_history_id=<%-comment.order_id%>" target="_blank"><%-comment.order_id%></a></td>
+                        <td><a href="/admin/order/showoneorder?order_history_id=<%-comment.order_id%>" target="_blank"><%-comment.order_history_id%></a></td>
                         <td><%-dateformat('Y-m-d H:i:s', comment.time)%></td>
                         <td><div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
@@ -112,14 +112,7 @@
                     <li><a href="#">»</a></li>
                 </ul>
                 <hr />
-                <p>
-                    备注--好评：3
-                    <span class="am-icon-star am-danger" style="color: red"></span>&nbsp;
-                    中评：2
-                    <span class="am-icon-star am-danger" style="color: red"></span>&nbsp;
-                    差评：1
-                    <span class="am-icon-star am-danger" style="color: red"></span>&nbsp;
-                </p>
+
             </form>
 
             <div class="foods">

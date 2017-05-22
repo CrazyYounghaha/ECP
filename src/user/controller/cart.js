@@ -145,6 +145,7 @@ export default class extends Base {
 			let id = yield this.model('order_history').add({//新增订单历史
 				order_count: toHistory[0].total_count,
 				order_pay: toHistory[0].total_pay,
+				order_time: toHistory[0].order_time,
 				pay_time : dateformat('Y-m-d H:i:s', new Date().valueOf()),
 				pay_type: 1,
 				status: 1,

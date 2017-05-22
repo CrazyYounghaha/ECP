@@ -126,7 +126,7 @@ export default class extends Base {
                     let pic_relPath = pic_path.substring(pic_path.indexOf('/static/shop/images/'));
                     let cart_pic_relPath = cart_pic_path.substring(cart_pic_path.indexOf('/static/shop/images/'));
                     images(one_pic.path)                     //Load image from file
-                        .resize(218,218)
+                        .resize(350,350)
                         .save(pic_path, {           //Save the image to a file,whih quality 50
                             operation : 100                    //保存图片到文件,设置图片质量
                         })
@@ -136,8 +136,8 @@ export default class extends Base {
                         });
 
                     let product_pic_id = yield this.model('product').where({product_id: ['=', product_id]}).update({
-                        cart_picture:pic_relPath,
-                        picture:cart_pic_relPath
+                        cart_picture:cart_pic_relPath,
+                        picture:pic_relPath
                     });
                 }
                 //详情页小图、中图、大图压缩设置
@@ -322,7 +322,7 @@ export default class extends Base {
                     let cart_pic_relPath = cart_pic_path.substring(cart_pic_path.indexOf('/static/shop/images/'));
                     // console.log('pic_relPath:'+pic_relPath);
                     images(mid_absolute_pic)                     //Load image from file
-                        .resize(218,218)
+                        .resize(350,350)
                         .save(pic_path, {           //Save the image to a file,whih quality 50
                             operation : 100                    //保存图片到文件,设置图片质量
                         })
