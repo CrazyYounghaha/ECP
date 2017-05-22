@@ -179,7 +179,7 @@
                 <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped" id="myTable">
                     <thead>
                     <tr class="am-success">
-                        <th class="table-check"><input type="checkbox" /></th>
+                        <th class="table-check"><input id="all_check"  type="checkbox"  /></th>
 
                         <th class="table-id" >ID</th>
                         <th class="table-title" >管理员名称</th>
@@ -190,9 +190,10 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <!--在页面表格上循环输出-->
                     <% for (var index in adminInfo) {%>
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><input id="check_<%- adminInfo[index].admin_id -%>" type="checkbox" /></td>
 
                         <td><%- adminInfo[index].admin_id -%></td>
                         <td><%- adminInfo[index].name -%></td>
@@ -201,14 +202,12 @@
                         <td class="am-hide-sm-only"><%- adminInfo[index].phone -%></td>
                         <td>
 
-
-
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <!--<button id="btn_del_<%-adminInfo[index].admin_id%>" type="button" class="change am-btn am-btn-default am-btn-xs am-text-secondary am-round"   title="修改"><span class="am-icon-pencil-square-o"></span></button>-->
                                     <!--<button class="am-btn am-btn-default am-btn-xs am-text-success am-round"><span class="am-icon-search" title="查看详情"></span> </button>-->
                                     <button  type="button" data-admin-id="<%- adminInfo[index].admin_id -%>" data-admin-name="<%- adminInfo[index].name -%>" data-admin-password="<%- adminInfo[index].password -%>" data-admin-email="<%- adminInfo[index].email -%>"  data-admin-phone="<%- adminInfo[index].phone -%>" class="change am-btn am-btn-default am-btn-xs am-text-secondary am-round"   title="修改"><span class="am-icon-pencil-square-o"></span></button>
-                                    <button  type="button" id="btn_del_<%-adminInfo[index].admin_id%>"  class="delete am-btn am-btn-default am-btn-xs am-text-danger am-round"  title="删除"><span class="am-icon-trash-o" ></span></button>
+                                    <button  type="button" id="btn_del_<%- adminInfo[index].admin_id -%>"  class="delete am-btn am-btn-default am-btn-xs am-text-danger am-round"  title="删除"><span class="am-icon-trash-o" ></span></button>
                                 </div>
                             </div>
                         </td>
@@ -218,7 +217,8 @@
                 </table>
 
                 <div class="am-btn-group am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
+
+                    <button type="button" id="btn_del_selectBoxes" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
                 </div>
 
                 <ul class="am-pagination am-fr">
@@ -278,7 +278,8 @@
 
         })
 
-    })
+    });
+
     $(".change").click(function (event) {
         $("input[name=admin_id]").val($(event.currentTarget).attr("data-admin-id"));
         $("input[name=changeName]").val($(event.currentTarget).attr("data-admin-name"));
@@ -286,7 +287,7 @@
         $("input[name=changeEmail]").val($(event.currentTarget).attr("data-admin-email"));
         $("input[name=changePhone]").val($(event.currentTarget).attr("data-admin-phone"));
         $("#my-popups").modal();
-    })
+    });
 
     $('#changeAdmin').click(function () {
         var data = $('#changeForm').serialize();
@@ -309,8 +310,9 @@
             }
         })
 
-    })
+    });
 
+//删除按钮
      $(".delete").click(function () {
          var admin_id_str = this.id;
          var admin_id = admin_id_str.substr(('btn_del_').length);
@@ -318,9 +320,115 @@
          $.ajax({
              url:"/admin/privilege/deleteadmin",
              method:"post",
-             data:{admin_id:admin_id}
+             data:{admin_id:admin_id},
+             success: function (msg) {
+                 //console.log(msg);
+                 switch (msg.data){
+                     case 1:
+                         location.reload(true);
+                         break;
+                 }
+             }
          });
-     })
+     });
+
+
+     //复选框删除、全选
+    $("#all_check").on('click',function () {
+
+        var checkboxes = $("table tbody input[type='checkbox']");
+
+        if(this.checked){
+            for(var i=0; i < checkboxes.length; i++){
+                checkboxes[i].checked = true;
+            }
+        }
+        else {
+            for(var i=0; i < checkboxes.length; i++){
+                checkboxes[i].checked = false;
+            }
+        }
+
+    });
+
+    //单个删除
+    $('.btn-del').on('click',function () {
+        var admin_id = this.id.substring(8);
+        var Ids = admin_id + ",";
+
+        if (delConfirm()) {
+            ajaxDelete(Ids);
+        }
+        return false;
+
+    });
+
+
+    //全部删除
+    $('#btn_del_selectBoxes').on('click', function () {
+
+     var checkboxes = $("table tbody input[type='checkbox']");
+     //    alert(checkboxes.length);
+        var Ids = "";
+        var count = 0;
+     for (var i = 0; i < checkboxes.length; i++) {
+
+      if (checkboxes[i].checked) {
+          var curid = checkboxes[i].id.replace('check_', '');
+          Ids += curid+",";
+          count++;
+        }
+     }
+         if (count <= 0)
+         alert('未选中任何信息');
+
+         else {
+
+           if (delConfirm()) {
+             ajaxDelete(Ids);     //单选或多选共同调用
+         }
+       }
+     });
+           function ajaxDelete(Ids) {
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/privilege/delete",
+                dataType: "json",
+                data: {admin_id: Ids},
+
+                    success: function (result) {
+                        console.log(result);
+
+                   if (result.data == 1) {
+                    alert("删除成功");
+                    location.href = "/admin/privilege/addadmin";
+             }
+                   else {
+                   alert("删除失败");
+          }
+
+           }, complete: function () {
+
+           }, error: function (e) {
+               console.log(e);
+           }
+
+            });
+        }
+     //删除弹窗二次确认
+     function delConfirm() {
+         var msg = "您真的确定要删除吗？\n\n请确认！";
+          if (confirm(msg) == true) {
+
+           return true;
+      } else
+          {
+          return false;
+       }
+     }
+
+
 
 
 

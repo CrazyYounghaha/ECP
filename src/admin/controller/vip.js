@@ -19,29 +19,27 @@ export default class extends Base {
 	}
 
 
-	* addvipAction(){
-		if(this.isPost()) {
-            let vipInfo = this.post();
-            // console.log(vipInfo);
-            let check = yield this.model('user').where({name: vipInfo.vipName}).select();
-             //console.log(check);
-            if (think.isEmpty(check)) {  //如果不存在这个用户就新增
-                vipInfo.vipPassword = encryptPassword(vipInfo.vipPassword);
-                yield this.model('user').add({
-                    name: vipInfo.vipName,
-                    password: vipInfo.vipPassword,
-                    email: vipInfo.vipEmail,
-                    phone: vipInfo.vipPhone,
-                    is_online: vipInfo.vipLogin,
-                    is_vip: vipInfo.vipStatus
-                });
-                return this.success(1);
-            }
-            return this.success(-1);  //已存在同名会员无法添加
-        }else{
+    // * addvipAction() {
+    //     if (this.isPost()) {
+    //         let vipInfo = this.post();
+    //         // console.log(vipInfo);
+    //         let check = yield this.model('user').where({name: vipInfo.vipName}).select();
+    //         //console.log(check);
+    //         if (think.isEmpty(check)) {  //如果不存在这个用户就新增
+    //             vipInfo.vipPassword = encryptPassword(vipInfo.vipPassword);
+    //             yield this.model('user').add({
+    //                 name: vipInfo.vipName,
+    //                 password: vipInfo.vipPassword,
+    //                 email: vipInfo.vipEmail,
+    //                 phone: vipInfo.vipPhone,
+    //                 is_online: vipInfo.vipLogin,
+    //                 is_vip: vipInfo.vipStatus
+    //             });
+    //             return this.success(1);
+    //         }
+    //         return this.success(-1);  //已存在同名会员无法添加
+    //     }
+    // }
 
-
-		}
-	}
 
 }
