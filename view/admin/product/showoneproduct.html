@@ -31,7 +31,7 @@
             <div class="listbiaoti am-cf">
                 <ul class="am-icon-flag on"> 栏目名称</ul>
 
-                <dl class="am-icon-home" style="float: right;"> 当前位置： 商品管理 > <a href="/admin/product/add">商品详情</a></dl>
+                <dl class="am-icon-home" style="float: right;"> 当前位置： 商品管理 > <a href="/admin/product/showoneproduct?productid=<%-product.product_id%>">商品详情</a></dl>
 
 
 
@@ -39,6 +39,7 @@
 
             <div class="fbneirong">
                 <form class="am-form" id="uploadForm" method="post" action="/admin/product/update"  enctype="multipart/form-data">
+                    <input name="product_id" type="hidden" class="am-input-sm" value="<%-product.product_id%>" required>
                     <div class="am-form-group am-cf">
                         <div class="zuo">商品名称：</div>
                         <div class="you">
@@ -57,10 +58,7 @@
                         <div class="you" style="width: 11%">
                             <input name="product_price" type="number" step="0.01" class="am-input-sm" value="<%-product.price%>" placeholder="请输入商品价格" required="required">
                         </div>
-                        <div class="zuo">商品库存：</div>
-                        <div class="you" style="width: 11%">
-                            <input name="product_inventory" type="number" step="1" class="am-input-sm" value="<%-product.inventory%>" placeholder="请输入商品库存" required="required">
-                        </div>
+
                         <div class="zuo">商品类型：</div>
                         <div class="you" style="z-index: 1024;width: 10%;">
                             <select name="product_type" value="<%-product.type%>" data-am-selected="{btnWidth: 105, btnSize: 'md', btnStyle: 'default'}">
@@ -75,21 +73,41 @@
                                 <%})%>
                             </select>
                         </div>
-                    </div>
-                    <!--<div class="am-form-group am-cf">-->
-                        <!--<div class="zuo">缩略图：</div>-->
-                        <!--<div class="you"><input type="file" id="doc-ipt-file-1"> </div>-->
-                    <!--</div>-->
+                        <div class="zuo">商品状态：</div>
+                        <div class="you" style="z-index: 1024;width: 10%;">
+                            <select name="product_status" value="<%-product.is_onsale%>" data-am-selected="{btnWidth: 105, btnSize: 'md', btnStyle: 'default'}">
+                                <%if(product.is_onsale === 0){%>
+                                    <option value='0' selected>下架</option>
+                                <%}else{%>
+                                    <option value='0'>下架</option>
+                                <%}%>
 
-                    <!--<div class="am-form-group am-cf">-->
-                        <!--<div class="zuo">产品图片：</div>-->
-                        <!--<div class="you" style="height: 45px;">-->
-                            <!--<input type="file" id="doc-ipt-file-1" name="product_pic[]" multiple>-->
-                            <!--<p class="am-form-help">请选择要上传的文件...</p>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                                <%if(product.is_onsale === 1){%>
+                                <option value='1' selected>上架</option>
+                                <%}else{%>
+                                <option value='1'>上架</option>
+                                <%}%>
+
+                                <%if(product.is_onsale === 2){%>
+                                <option value='2' selected>失效宝贝</option>
+                                <%}else{%>
+                                <option value='2'>失效宝贝</option>
+                                <%}%>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="am-form-group am-cf">
-                        <div class="zuo">产品图片：</div>
+                        <div class="zuo">图片(选中删除):</div>
+                        <div class="you">
+                            <%product_pictures.forEach(function(product_picture){%>
+                            <img style="width: 100px;height: 100px;" id="pic_<%-product_picture.picture_id%>" class="pic-download" src="<%-product_picture.mid_path%>">
+                            <input type="checkbox" name="flag_<%-product_picture.picture_id%>" id="flag_<%-product_picture.picture_id%>" style="visibility: hidden" >
+                            <%})%>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <div class="zuo">添加新图片：</div>
                         <div class="you">
                             <div class="upload_box">
                                 <div class="upload_main">
@@ -106,14 +124,12 @@
                     </div>
 
 
-
                     <div class="am-form-group am-cf">
                         <div class="you" style="margin-left: 58%;">
                             <button id="btnsubmit_form" type="submit" class="am-btn am-btn-primary am-btn-lg am-radius">保存修改</button>
                         </div>
                     </div>
                 </form>
-
             </div>
 
 
@@ -146,7 +162,6 @@
 
 <!--<![endif]-->
 <script src="/static/admin/js/zxxFile.js"></script>
-
 
 <script>
     var params = {
@@ -238,15 +253,30 @@
 
 
 </script>
-
-
 <script>
     //此处蒙混过关
     $(function () {
         $('#uploadForm').submit(function () {
             alert("更新成功")
-        })
+        });
+        $('.pic-download').on('click',function () {
+            var cur_id = this.id.replace('pic_','');
+            var input_flag_id = 'flag_'+cur_id;
+//            alert(input_flag_id);
+            if(this.style.opacity == "0.1"){
+                this.style.opacity = "1";
+                document.getElementById(input_flag_id).checked = false;
+
+            }
+            else {
+                this.style.opacity = "0.1";
+                document.getElementById(input_flag_id).checked = true;
+
+            }
+
+        });
     })
 </script>
+
 </body>
 </html>
