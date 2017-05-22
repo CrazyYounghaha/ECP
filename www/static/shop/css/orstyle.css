@@ -1,3 +1,4 @@
+.hidden { display: none !important;}
 .user-order .am-margin {margin: 0;}
 .am-nav-tabs > li > a{padding:0px 2px; margin:0px 0px ;text-align: center;}
 .order-left{border: 1px solid #E4EAEE;padding: 5px;}

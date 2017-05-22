@@ -1,7 +1,7 @@
 <div class="nav-navicon admin-main admin-sidebar">
     <!--改样式-->
     <% if(controller.isadminlogin) { %>
-    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;">当前管理员：<%- controller.admin.admin_name -%></div>
+    <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;">当前管理员：<p class="get_admin_name" style="display: inline;"><%- controller.admin.admin_name -%></p></div>
     <% } else { %>
     <div class="sideMenu am-icon-dashboard" style="color:#aeb2b7; margin: 10px 0 0 0;" onclick="window.open('/admin/index/login','_self')"> 点击登录</div>
     <% } %>
@@ -44,13 +44,17 @@
             <!--<li>会员推荐图</li>-->
             <!--<li>推荐列表</li>-->
         </ul>
+        <% if (style == "custom" ) { %>
+        <h3 class="am-icon-volume-up on"><em></em> <a href="#">信息通知</a></h3>
+        <% } else { %>
         <h3 class="am-icon-volume-up"><em></em> <a href="#">信息通知</a></h3>
+        <% } %>
         <ul>
             <li>站内消息 /留言</li>
             <!--<li>短信</li>-->
             <!--<li>邮件</li>-->
             <!--<li>微信</li>-->
-            <li>客服</li>
+            <li><a href="/admin/custom/index">客服</a></li>
         </ul>
         <h3 class="am-icon-gears"><em></em> <a href="#">系统设置</a></h3>
         <ul>

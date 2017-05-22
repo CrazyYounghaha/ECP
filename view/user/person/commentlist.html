@@ -1,0 +1,118 @@
+<% include ../static/personHead.html %>
+        <div class="main-wrap">
+
+            <div class="user-comment">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">发表评论</strong> / <small>Make&nbsp;Comments</small></div>
+                </div>
+                <hr/>
+
+                <div class="comment-main">
+                    <% var index %>
+                    <% for ( index in commentList ) { %>
+                    <div class="comment-list">
+                        <div class="item-pic">
+                            <a href="#" class="J_MakePoint">
+                                <img src="<%- commentList[index].picture -%>" class="itempic">
+                            </a>
+                        </div>
+
+                        <div class="item-title">
+
+                            <div class="item-name">
+                                <a href="#">
+                                    <p class="item-basic-info"><%- commentList[index].name -%></p>
+                                </a>
+                            </div>
+                            <div class="item-info">
+                                <div class="info-little">
+                                    <span>商品：<%- commentList[index].detail -%></span>
+                                </div>
+                                <div class="item-price">
+                                    价格：<strong><%- commentList[index].price -%>元</strong>
+                                </div>
+                                <p class="hidden"><%- commentList[index].product_id -%></p>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="item-comment">
+                            <textarea placeholder="请写下对宝贝的感受吧，对他人帮助很大哦！"></textarea>
+                        </div>
+                        <div class="filePic">
+                            <input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*" >
+                            <span>晒照片(0/5)</span>
+                            <img src="/static/shop/images/image.jpg" alt="">
+                        </div>
+                        <div class="item-opinion">
+                            <li><i class="op1" value="5"></i>好评</li>
+                            <li><i class="op2" value="3"></i>中评</li>
+                            <li><i class="op3" value="1"></i>差评</li>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div class="info-btn">
+                        <div class="am-btn am-btn-danger">发表评论</div>
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $(".comment-list .item-opinion li").click(function() {
+                                $(this).prevAll().children('i').removeClass("active");
+                                $(this).nextAll().children('i').removeClass("active");
+                                $(this).children('i').addClass("active");
+
+                            });
+                        })
+                    </script>
+                </div>
+
+            </div>
+
+        </div>
+        <!--底部-->
+        <% include ../static/personFooter.html %>
+    </div>
+
+    <% include ../static/leftMenu.html %>
+</div>
+<script>
+    function Person(star,comment,order_history_id,product_id)
+    {
+        this.star=star;
+        this.comment=comment;
+        this.order_history_id= order_history_id;
+        this.product_id=product_id;
+    }
+
+    $('div .am-btn-danger').click(function(){
+
+        let number = $('.comment-list').length;
+//        console.log($('.comment-list').length);
+        let commentDetail = { number: number};
+//        let userChoose = $('.comment-list .item-opinion li .active');
+
+        for (let i =0; i< number ; i++){
+
+            let star = $('.comment-list .item-opinion li .active')[i].getAttribute("value");//评价星级
+            let comment = $('.comment-list')[i].getElementsByClassName('item-comment')[0].children[0].value;//评价内容
+            let args = getQueryStringArgs();
+            let order_history_id = args.orderId;//获取商品订单号
+            let product_id = $('p.hidden')[i].innerHTML;//商品id
+
+            commentDetail[i] = new Person(star, comment, order_history_id, product_id);
+        }
+//        console.log(JSON.stringify(commentDetail));
+        $.ajax({
+            url: "/person/commentlist",
+            type: "post",
+            data: commentDetail,
+            success: function(){
+                _toastr("评论成功","top-right","success",false);
+            }
+        })
+    })
+</script>
+
+</body>
+
+</html>
