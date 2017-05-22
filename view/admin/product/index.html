@@ -108,6 +108,14 @@
                             <div class="am-btn-group am-btn-group-xs">
                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-round" onclick="window.open('/admin/product/showoneproduct?productid=<%-product.product_id%>');return false;"><span class="am-icon-pencil-square-o"></span></button>
                                 <button id='btn_del_<%-product.product_id%>' class="btn-del am-btn am-btn-default am-btn-xs am-text-danger am-round"><span class="am-icon-trash-o"></span></button>
+
+                                <button title="<%-(product.is_onsale === 1)?'下架':'上架';%>" id='btn_<%-product.is_onsale%>_<%-product.product_id%>' class="btn-up-down am-btn am-btn-default am-btn-xs am-text-danger am-round">
+                                    <%if(product.is_onsale === 1){%>
+                                    <span  class="am-icon-level-down"></span>
+                                    <%}else{%>
+                                    <span class="am-icon-level-up"></span>
+                                    <%}%>
+                                </button>
                             </div>
                         </div></td>
                     </tr>
@@ -116,8 +124,6 @@
                 </table>
 
                 <div class="am-btn-group am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 上架</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 下架</button>
                     <button type="button" class="am-btn am-btn-default" onclick="window.open('/admin/product/add')"><span class="am-icon-plus"></span> 新增</button>
                     <button id="btn_del_selectBox" type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
                 </div>
@@ -189,9 +195,49 @@
                 }
             }
         });
+        //修改商品状态
+        $('.btn-up-down').on('click', function () {
+//            alert(delConfirm());
+            let id_str = this.id;
+            let product_id = id_str.substring(id_str.lastIndexOf('_')+1);
+            let cur_status = id_str.substring(id_str.indexOf('_')+1,id_str.lastIndexOf('_'));
+            let action_id;
+            let action_str;
+            if(cur_status == 1){
+                action_id = 0;
+                action_str = '下架';
+            }
+            else {
+                action_id = 1;
+                action_str = '上架';
+            }
+            if (upOrDownConfirm(action_str)) {
+                $.ajax({
+                    type: "POST", url: "/admin/product/updatestatus", dataType: "json",
+                    data: {product_id: product_id,action_id:action_id},
+                    success: function (result) {
+                        console.log(result);
+                        if (result.data == 1) {
+                            alert(action_str+"成功");
+                            location.href = "/admin/product/index";
+                        }
+                        else {
+                            alert(action_str+"失败");
+                        }
+
+                    }, complete: function () {
+//
+                    }, error: function (e) {
+                        console.log(e);
+                    }
+                });
+            }
+            return false;
+        });
+        //删除商品
         $('.btn-del').on('click', function () {
 //            alert(delConfirm());
-            let product_id = this.id.substring(8);
+            let product_id = this.id.substring();
             let IDs = product_id+",";
 
             if (delConfirm()) {
@@ -244,6 +290,15 @@
         //删除弹窗二次确认
         function delConfirm() {
             var msg = "您真的确定要删除吗？\n\n请确认！";
+            if (confirm(msg) == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        //修改弹窗二次确认
+        function upOrDownConfirm(upOrDown) {
+            var msg = "您真的确定要"+upOrDown+"吗？\n\n请确认！";
             if (confirm(msg) == true) {
                 return true;
             } else {
