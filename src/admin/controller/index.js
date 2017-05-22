@@ -64,5 +64,12 @@ export default class extends Base {
         return this.display();
       }
   }
+    * logoutAction(){
+        if(this.isadminlogin){
+            yield this.session("loginadmin",null);
+            return this.redirect('/admin/index/login');
+        }
+    }
+
 
 }

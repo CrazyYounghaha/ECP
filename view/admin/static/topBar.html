@@ -20,6 +20,7 @@
                     <li><a href="#">未发货订单</a></li>
                     <li><a href="#">低库存产品</a></li>
                     <li><a href="#">信息反馈</a></li>
+                    <li><a href="" id="logout">注销登录</a></li>
 
 
                 </ul>
@@ -53,4 +54,15 @@
             <!--class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>-->
         </ul>
     </div>
+    <script>
+        $('#logout').click(function () {
+            $.ajax({
+                url: "/admin/index/logout",
+                type: "post",
+                success: function () {
+                    location.href="/admin/index/login";
+                }
+            })
+        })
+    </script>
 </header>

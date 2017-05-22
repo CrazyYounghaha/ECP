@@ -15,7 +15,7 @@ export default class extends Base {
 		if(this.isGet()){
 			let keyWord = this.get();
 			let productType = yield this.model("product_type").where({tname: keyWord.searchInfo}).find();
-			let productDetails = yield this.model("product").where({type: productType.product_type_id}).select();
+			let productDetails = yield this.model("product").where({type: productType.product_type_id,is_onsale: 1}).select();
 			// console.log(productDetails);
 			this.assign("style","search");
 			this.assign("products",productDetails);
