@@ -155,6 +155,19 @@
                                                 <p class="hidden"><%- order_history[index].order_history_id -%></p>
                                             </li>
                                         </div>
+                                        <% } else if( order_history[index].status == 4) { %>
+                                        <div class="move-right">
+                                            <li class="td td-status">
+                                                <div class="item-status">
+                                                    <p class="Mystatus">交易成功</p>
+                                                    <p class="order-info"><a href="/person/orderinfo">订单详情</a></p>
+                                                    <p class="order-info"><a href="/person/express">查看物流</a></p>
+                                                </div>
+                                            </li>
+                                            <li class="td td-change">
+                                                <div class="am-btn am-btn-default am-round">已完成</div>
+                                            </li>
+                                        </div>
                                         <% } %>
                                     </div>
                                 </div>
