@@ -43,7 +43,7 @@ export default class extends Base {
             let check = yield this.model('admin').where({admin_id:changeInfo.admin_id}).select();
             //console.log(check);
             if(!think.isEmpty(check)) {  //如果存在该管理员就修改
-                yield this.model('admin').where({admin_id:changeInfo.admin_id}).update({
+                yield this.model('admin').where({admin_id:changeInfo.admin_id}).update({  //管理员更新对应信息
                     name: changeInfo.changeName,
                     password: changeInfo.changePwd,
                     email: changeInfo.changeEmail,
@@ -61,21 +61,48 @@ export default class extends Base {
             return this.display();
         }
 
+    }
 
-
-
-
-
-        }
         * deleteadminAction() {
         if(this.isPost()) {
             let delete_admin_id = this.post('admin_id');
             // console.log(delete_admin_id);
             yield this.model('admin').where({admin_id:delete_admin_id}).delete();
+
         }
+            return this.success(1);
 
         }
 
+    * deleteAction(){
+        yield this.weblogin();
+        this.assign("style","privilege");
+
+
+        if (this.isAjax()) {
+            let admin_ids_str = this.post('admin_id');
+            admin_ids_str = admin_ids_str.substring(0,admin_ids_str.length-1);
+            let admin_ids = admin_ids_str.split(',');
+            // console.log(admin_ids);
+
+            let model = this.model('admin');
+            for(let i = 0;i < admin_ids.length;i++){
+                let cur_admin_id = admin_ids[i];
+                try{
+                    yield model.startTrans();//事务处理
+                    yield this.model('admin').where({admin_id: ['=', cur_admin_id]}).delete();
+                    yield model.where({admin_id: ['=', cur_admin_id]}).delete();
+                    yield model.commit();
+                }catch(e){
+                    yield model.rollback();
+                    return this.success(-1);
+                }
+            }
+            return this.success(1);
+        }
+
+        return this.display();
+    }
 
     }
 
