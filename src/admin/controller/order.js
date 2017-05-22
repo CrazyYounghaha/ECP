@@ -84,14 +84,14 @@ export default class extends Base {
             let order_id = this.get('order_history_id');
             let order_result = yield this.model('order_history_detail').join({
                 table: "order_history",
-                join: "left",
+                join: "inner",
                 on: ["order_history_id", "order_history_id"]
             }).join({
                 table: "product",
-                join: "left",
+                join: "inner",
                 on: ["product_id","product_id"]
             }).where({"ecp_order_history.order_history_id": order_id}).select();
-            // console.log(order_result);
+            console.log(order_result);
             let user_id = order_result[0].user_id;
             let address_result = yield this.model('address').where({user_id: user_id}).find();
             if (think.isEmpty(order_result)) {
