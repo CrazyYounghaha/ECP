@@ -18,16 +18,16 @@
             <div class="am-popup-bd">
 
 
-                <form class="am-form tjlanmu" id="pop_update_form" action="/admin/order/updateorderstatus">
+                <form class="am-form tjlanmu" id="pop_update_form" method="post" action="/admin/store/addstore">
 
 
                     <div class="am-form-group">
                         <label>商品编号：</label><label id="product_id"></label>
-                        <input name="order_id" type="hidden">
+                        <input name="product_id" type="hidden">
                     </div>
                     <br>
-                    <div class="am-form-group">
-                        <label>商品名称：</label><label id="product_name"></label>
+                    <div class="am-form-group" style="text-overflow:ellipsis; white-space:nowrap;overflow:hidden; ">
+                        <label>商品名称：</label><span id="product_name" style="text-overflow:ellipsis; white-space:nowrap;overflow:hidden; "></span>
                     </div>
                     <br>
                     <div class="am-form-group">
@@ -46,142 +46,6 @@
                 </form>
             </div>
         </div>
-        <div class="am-popup am-popup-inner" id="my-popups">
-            <div class="am-popup-hd">
-                <h4 class="am-popup-title">详细库存信息（这里包含 销量 库存  损耗，  客服备注  销售的全部金额）</h4>
-                <span data-am-modal-close class="am-close">&times;</span> </div>
-            <div class="am-popup-bd">
-                <form class="am-form tjlanmu">
-                    <div class="am-form-group am-cf">
-                        <div class="zuo">销量：</div>
-                        <div class="you">
-                            245234523452
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <div class="zuo"> 库存：</div>
-                        <div class="you">
-                            234523452
-                        </div>
-                    </div>
-
-
-                    <div class="am-form-group am-cf">
-                        <div class="zuo"> 损耗：</div>
-                        <div class="you">
-                            234523452
-                        </div>
-                    </div>
-
-                    <div class="am-form-group am-cf">
-                        <div class="zuo"> 购买信息：</div>
-                        <div class="you">
-                            234523452
-                        </div>
-                    </div>
-
-                    <div class="am-form-group am-cf">
-                        <div class="zuo"> 销售金额：</div>
-                        <div class="you">
-                            234523452
-                        </div>
-                    </div>
-
-
-                    <div class="am-form-group am-cf">
-                        <div class="zuo"> 成本：</div>
-                        <div class="you">
-                            234523452
-                        </div>
-                    </div>
-
-                    <div class="am-form-group am-cf">
-                        <div class="zuo"> 利润：</div>
-                        <div class="you">
-                            234523452
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-        <div class="am-popup am-popup-inner" id="my-popupss">
-            <div class="am-popup-hd">
-                <h4 class="am-popup-title">复制栏目</h4>
-                <span data-am-modal-close class="am-close">&times;</span> </div>
-            <div class="am-popup-bd">
-                <form class="am-form tjlanmu">
-
-
-                    <div class="am-form-group">
-                        <div class="zuo">复制到：</div>
-                        <div class="you">
-
-                            <select data-am-selected="{btnWidth: 200, btnSize: 'sm', btnStyle: 'danger'}">
-                                <option value="a">Apple</option>
-                                <option value="b">Banana</option>
-                                <option value="o">Orange</option>
-                                <option value="m">Mango</option>
-                            </select>
-                            顶级栏目选默认
-
-                        </div>
-                    </div>
-
-
-                    <div class="am-form-group">
-                        <div class="zuo">新栏目名称：</div>
-                        <div class="you">
-                            <input type="email" class="am-input-sm" id="doc-ipt-email-1" placeholder="请输入标题">
-                        </div>
-                    </div>
-                    <div class="am-form-group">
-                        <div class="zuo">栏目关键词：</div>
-                        <div class="you">
-                            <input type="password" class="am-input-sm" id="doc-ipt-pwd-1" placeholder="请输入关键词">
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <div class="zuo">栏目描述：</div>
-                        <div class="you">
-                            <textarea class="" rows="2" id="doc-ta-1"></textarea>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <div class="zuo">栏目图片：</div>
-                        <div class="you" style="height: 45px;">
-                            <input type="file" id="doc-ipt-file-1">
-                            <p class="am-form-help">请选择要上传的文件...</p>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <div class="zuo">简介：</div>
-                        <div class="you">
-                            <textarea class="" rows="2" id="doc-ta-1"></textarea>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <div class="zuo">状态：</div>
-                        <div class="you" style="margin-top: 3px;">
-                            <label class="am-checkbox-inline">
-                                <input type="checkbox" value="option1">
-                                显示 </label>
-                            <label class="am-checkbox-inline">
-                                <input type="checkbox" value="option2">
-                                隐藏 </label>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <div class="you">
-                            <p>
-                                <button type="submit" class="am-btn am-btn-success am-radius">提交</button>
-                            </p>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
 
 
 
@@ -247,6 +111,7 @@
                         <th>销售数量</th>
                         <th>库存数量</th>
                         <th class="table-author am-hide-sm-only">已销售金额</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -259,6 +124,9 @@
                         <td><%-record_result.cumulative_sales%></td>
                         <td><%-record_result.inventory%></td>
                         <td><%-record_result.cumulative_sales * record_result.price%></td>
+                        <td>
+                            <button type="button" data-product-id="<%-record_result.product_id%>" data-product-name="<%-record_result.name%>" class="btn-add-store am-btn am-btn-success am-round am-btn-xs am-icon-plus">&nbsp;进货</button>
+                        </td>
                     </tr>
                     <%})%>
                     </tbody>
@@ -299,6 +167,14 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="/static/admin/js/amazeui.min.js"></script>
 <!--<![endif]-->
-
+<script>
+    $('.btn-add-store').on('click',function () {
+        $('#product_id').text($(event.currentTarget).attr("data-product-id"));
+        $('input[name=product_id]').val($(event.currentTarget).attr("data-product-id"));
+        $('#product_name').text($(event.currentTarget).attr("data-product-name"));
+        $('#my-popup').modal();
+        return false;
+    });
+</script>
 </body>
 </html>
