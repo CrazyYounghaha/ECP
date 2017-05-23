@@ -18,7 +18,9 @@ export default class extends Base {
 	}
 	* addressAction(){
 		yield this.weblogin();
+		let address = yield this.model('address').where({user_id: this.user.id}).select();
 		this.assign("style","address");
+		this.assign("address", address);
 		return this.display();
 	}
 	* informationAction(){
